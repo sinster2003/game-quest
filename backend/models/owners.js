@@ -28,6 +28,9 @@ const ownerSchema = new mongoose.Schema({
         minLength: 6,
         required: true
     },
+    o_profilePic: {
+        type: String
+    },
     is_owner: {
         type: Boolean,
         default: true,
@@ -36,7 +39,6 @@ const ownerSchema = new mongoose.Schema({
     o_shop: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Shop",
-        required: true
     }
 }, {
     timestamps: true

@@ -9,5 +9,9 @@ export const errorHandler = (error, req, res, next) => {
         return res.status(400).json({error: "Invalid Data"});
     }
 
+    if(error.name === "ZodError") {
+        return res.status(400).json({error: error.message});
+    }
+
     res.status(500).json({error: "Something went wrong"});
 }

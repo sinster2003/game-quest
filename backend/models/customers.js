@@ -28,6 +28,9 @@ const customersSchema = new mongoose.Schema({
         minLength: 6,
         required: true
     },
+    c_profilePic: {
+        type: String
+    },
     is_owner: {
         type: Boolean,
         default: false,

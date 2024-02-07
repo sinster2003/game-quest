@@ -14,6 +14,9 @@ const shopsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    s_logo: {
+        type: String
+    },
     s_games: [
         {
             type: mongoose.Schema.Types.ObjectId,
