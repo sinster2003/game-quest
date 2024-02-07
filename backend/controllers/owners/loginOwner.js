@@ -1,5 +1,5 @@
-import Owner from "../../models/owners";
-import login from "../../zod/login";
+import Owner from "../../models/owners.js";
+import login from "../../zod/login.js";
 
 const loginOwner = async (req, res) => {
     const { username, password } = req.body;
@@ -11,7 +11,7 @@ const loginOwner = async (req, res) => {
     })
 
     // username present or not
-    const isExistingOwner = await Owner.find({username});
+    const isExistingOwner = await Owner.findOne({username});
 
     if(!isExistingOwner) {
         return res.status(400).json({message: "Username not found. Please sign up"});

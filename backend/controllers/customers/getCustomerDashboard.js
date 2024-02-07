@@ -1,8 +1,10 @@
-import Customer from "../../models/customers";
+import Customer from "../../models/customers.js";
 
 const getCustomerDashboard = async (req, res) => {
   // retrieve customer_id from req.customer
   const customerId = req.customer;
+
+  console.log(customerId)
   
   // find and fetch from Customer database
   const customerDetails = await Customer.findById(customerId).select("-password").select("-updatedAt");

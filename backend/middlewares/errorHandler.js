@@ -10,8 +10,12 @@ export const errorHandler = (error, req, res, next) => {
     }
 
     if(error.name === "ZodError") {
-        return res.status(400).json({error: error.message});
+        return res.status(400).json({error: "Invalid Inputs"});
     }
 
-    res.status(500).json({error: "Something went wrong"});
+    if(error.name === "JsonWebTokenError") {
+        return res.status(400).json({error: "Token Error"});
+    }
+
+    res.status(500).json({error});
 }

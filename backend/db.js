@@ -1,10 +1,11 @@
 // connection to mongodb
 import mongoose from "mongoose";
+import { MONGO_URI } from "./utils/config.js";
 
 const connectDb = async () => {
     try {
         mongoose.set("strictQuery", false);
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(MONGO_URI);
         console.log(`MongoDB connected at ${mongoose.connection.host}`)
     }
     catch(error) {

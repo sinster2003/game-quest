@@ -2,18 +2,18 @@ import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 const customersSchema = new mongoose.Schema({
-    c_name: {
+    name: {
         type: String,
         required: true
     },
-    c_username: {
+    username: {
         type: String,
         minLength: 2,
         maxLength: 20,
         unique: true,
         required: true
     },
-    c_email: {
+    email: {
         type: String,
         validator: {
             validate: (email) => {
@@ -23,20 +23,20 @@ const customersSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    c_password: {
+    password: {
         type: String,
         minLength: 6,
         required: true
     },
-    c_profilePic: {
+    profilePic: {
         type: String
     },
-    is_owner: {
+    isOwner: {
         type: Boolean,
         default: false,
         required: true
     },
-    c_games: [
+    games: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Game"

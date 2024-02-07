@@ -1,7 +1,8 @@
 import express from "express";
-import signupCustomer from "../controllers/customers/signupCustomer";
-import loginCustomer from "../controllers/customers/loginCustomer";
-import customerAuth from "../middlewares/customerAuth";
+import signupCustomer from "../controllers/customers/signupCustomer.js";
+import loginCustomer from "../controllers/customers/loginCustomer.js";
+import customerAuth from "../middlewares/customerAuth.js";
+import getCustomerDashboard from "../controllers/customers/getCustomerDashboard.js";
 
 const customersRouter = express.Router();
 

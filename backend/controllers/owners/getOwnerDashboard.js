@@ -1,4 +1,4 @@
-import Owner from "../../models/owners";
+import Owner from "../../models/owners.js";
 
 const getOwnerDashboard = async (req, res) => {
   // retrieve owner_id from req.owner

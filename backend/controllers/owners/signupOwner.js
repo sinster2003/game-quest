@@ -1,5 +1,5 @@
 import { trusted } from "mongoose";
-import Owner from "../../models/owners";
+import Owner from "../../models/owners.js";
 
 const signupOwner = async (req, res) => {
     const { name, username, email, password } = req.body;
@@ -19,7 +19,7 @@ const signupOwner = async (req, res) => {
     ]});
 
     // check if owner exists
-    if(isExistingOwner) {
+    if(isExistingOwner?.length) {
         return res.status(400).json({message: "User already exists. Please Login"});
     }
 
@@ -33,7 +33,7 @@ const signupOwner = async (req, res) => {
         username,
         email,
         password: hashedPassword,
-        isOwner: trusted
+        isOwner: true
     });
 
     // save

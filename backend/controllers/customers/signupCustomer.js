@@ -1,6 +1,6 @@
-import Customer from "../../models/customers";
-import generateToken from "../../utils/generateToken";
-import signup from "../../zod/signup";
+import Customer from "../../models/customers.js";
+import generateToken from "../../utils/generateToken.js";
+import signup from "../../zod/signup.js";
 import bcrypt from "bcrypt";
 
 const signupCustomer = async (req, res) => {
@@ -21,7 +21,7 @@ const signupCustomer = async (req, res) => {
     ]});
 
     // check if customerexists
-    if(isExistingCustomer) {
+    if(isExistingCustomer?.length) {
         return res.status(400).json({message: "User already exists. Please Login"});
     }
 

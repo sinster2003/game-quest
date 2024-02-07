@@ -13,7 +13,7 @@ const loginCustomer = async (req, res) => {
     })
 
     // username present or not
-    const isExistingCustomer = await Customer.find({username});
+    const isExistingCustomer = await Customer.findOne({username});
 
     if(!isExistingCustomer) {
         return res.status(400).json({message: "Username not found. Please sign up"});

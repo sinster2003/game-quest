@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "./config";
+import { JWT_SECRET } from "./config.js";
 
 const generateToken = (id, isOwner, res) => {
     // sign a jwt

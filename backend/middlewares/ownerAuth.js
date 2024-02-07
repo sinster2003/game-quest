@@ -1,12 +1,12 @@
-import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../utils/config";
+import JWT from "jsonwebtoken";
+import { JWT_SECRET } from "../utils/config.js";
 
 const ownerAuth = (req, res, next) => {
     // retrieve cookies
-    const {jwt: jwtToken} = req.cookies;
+    const {jwt} = req.cookies;
 
     // check jwt
-    const {userId, isOwner} = jwt.verify(jwtToken, JWT_SECRET);
+    const {userId, isOwner} = JWT.verify(jwt, JWT_SECRET);
 
     // check isOwner
     if(!isOwner) {
