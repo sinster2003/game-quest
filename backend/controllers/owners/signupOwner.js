@@ -1,5 +1,7 @@
-import { trusted } from "mongoose";
 import Owner from "../../models/owners.js";
+import generateToken from "../../utils/generateToken.js";
+import signup from "../../zod/signup.js";
+import bcrypt from "bcrypt";
 
 const signupOwner = async (req, res) => {
     const { name, username, email, password } = req.body;

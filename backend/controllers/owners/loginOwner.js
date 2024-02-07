@@ -1,5 +1,7 @@
 import Owner from "../../models/owners.js";
+import generateToken from "../../utils/generateToken.js";
 import login from "../../zod/login.js";
+import bcrypt from "bcrypt";
 
 const loginOwner = async (req, res) => {
     const { username, password } = req.body;
