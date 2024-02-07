@@ -3,14 +3,17 @@ import mongoose from "mongoose";
 const reviewsSchema = new mongoose.Schema({
     customer_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Customer"
+        ref: "Customer",
+        required: true
     },
     game_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Game"
+        ref: "Game",
+        required: true
     },
     review: {
-        type: String
+        type: String,
+        required: true
     }
 }, {
     timestamps: true
