@@ -1,5 +1,4 @@
 import {
-  Button,
   Flex,
   Heading,
   Icon,
@@ -9,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { FiShoppingCart } from "react-icons/fi";
+import LandingButton from "../utils/LandingButton";
 
 const NavBar = () => {
   return (
@@ -43,14 +43,7 @@ const NavBar = () => {
         <IconButton rounded={"full"} variant="ghost">
           <SearchIcon color="white.light" cursor="pointer" />
         </IconButton>
-        <Button
-          bgGradient={"linear(to-r, purple.buttonLeft, purple.buttonRight)"}
-          _hover={{ boxShadow: '0px 0px 10px 5px #7a6ac3'}}
-          _active={{}}
-          _focus={{}}
-        >
-          Sign up
-        </Button>
+        <LandingButton text="Sign up"/>
       </Flex>
     </Flex>
   );

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700;800&display=swap');
+
 @font-face {
   font-family: 'Debug';
   src: url('./fonts/debug.ttf') format('truetype');
@@ -5,4 +7,9 @@
 
 .heading {
   font-family: 'Debug', sans-serif !important;
+}
+
+.sub-heading {
+  font-family: 'Raleway', sans-serif !important;
+  font-weight: 800;
 }
