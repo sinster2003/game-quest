@@ -1,5 +1,6 @@
 import JWT from "jsonwebtoken";
 import { JWT_SECRET } from "../utils/config.js";
+import Customer from "../models/customers.js"
 
 const customerAuth = (req, res, next) => {
     // retrieve cookies
@@ -11,6 +12,13 @@ const customerAuth = (req, res, next) => {
     // check !isOwner
     if(isOwner) {
         return res.status(400).json({message: "Not authorized to access customer routes"});
+    }
+
+    // check if customer is present in database
+    const customer = Customer.findById(userId);
+
+    if(!customer) {
+        return res.status(400).json({message: "No customer found"});
     }
 
     // add id in the req.customer object

@@ -3,6 +3,10 @@ import signupOwner from "../controllers/owners/signupOwner.js";
 import loginOwner from "../controllers/owners/loginOwner.js";
 import ownerAuth from "../middlewares/ownerAuth.js";
 import getOwnerDashboard from "../controllers/owners/getOwnerDashboard.js";
+import uploadGame from "../controllers/owners/uploadGame.js";
+import deleteGame from "../controllers/owners/deleteGame.js";
+import updateProfile from "../controllers/owners/updateProfile.js";
+import registerMarketplace from "../controllers/owners/registerMarketplace.js";
 
 const ownersRouter = express.Router();
 
@@ -10,5 +14,9 @@ const ownersRouter = express.Router();
 ownersRouter.post("/signup", signupOwner);
 ownersRouter.post("/login", loginOwner);
 ownersRouter.get("/dashboard", ownerAuth, getOwnerDashboard);
+ownersRouter.put("/update-profile", ownerAuth, updateProfile);
+ownersRouter.post("/register-marketplace", ownerAuth, registerMarketplace);
+ownersRouter.post("/upload-game", ownerAuth, uploadGame);
+ownersRouter.delete("/delete-game", ownerAuth, deleteGame);
 
 export default ownersRouter;
