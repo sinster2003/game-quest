@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Debug';
+  src: url('./fonts/debug.ttf') format('truetype');
+}
+
+.heading {
+  font-family: 'Debug', sans-serif !important;
+}
