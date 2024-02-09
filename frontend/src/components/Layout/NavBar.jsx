@@ -43,7 +43,7 @@ const NavBar = () => {
         <IconButton rounded={"full"} variant="ghost">
           <SearchIcon color="white.light" cursor="pointer" />
         </IconButton>
-        <LandingButton text="Sign up"/>
+        <LandingButton text="Log in"/>
       </Flex>
     </Flex>
   );

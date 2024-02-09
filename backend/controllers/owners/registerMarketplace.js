@@ -1,17 +1,52 @@
-const registerMarketplace = () => {
-    // owner id 
+import Owner from "../../models/owners.js";
+import Shop from "../../models/shops.js";
+import register from "../../zod/register.js";
 
-    // shop details from req.body
+const registerMarketplace = async (req, res) => {
+    // owner id
+    const ownerId = req.owner;
 
-    // if shop exist throw error
+    // check if owner already owns a shop
+    const owner = await Owner.findById(ownerId);
 
-    // validate shop
+    if(owner.shop) {
+        return res.status(400).json({message: "You own a marketplace already"});
+    }
 
-    // save shop in shops collection
+    // details of the marketplace
+    const {name, location, logo} = req.body;
 
-    // refer to the owner with the shop 
+    // input validations
+    register.parse({
+        name,
+        location,
+        logo
+    })
 
-    // respond
+    // if shop exists throw an error
+    const isExistingShop = await Shop.findOne({name});
+
+    if(isExistingShop) {
+        return res.status(400).json({message: "Shop already exists"});
+    }
+
+    // register the shop or marketplace
+    const shop = new Shop({
+        name,
+        owner: ownerId,
+        location,
+        logo,
+    })
+
+    // saving the marketplace in shops collection
+    await shop.save();
+
+    // updation of owner referring to the shop
+    await Owner.findByIdAndUpdate(ownerId, {shop: shop._id});
+
+    res.status(200).json({
+        message: "Marketplace successfully registered"
+    });
 }
 
 export default registerMarketplace;

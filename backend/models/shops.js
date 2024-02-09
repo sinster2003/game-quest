@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 
 const shopsSchema = new mongoose.Schema({
     name: {
         type: String,
+        unique: true,
         required: true
     },
     owner: {
@@ -15,7 +17,8 @@ const shopsSchema = new mongoose.Schema({
         required: true
     },
     logo: {
-        type: String
+        type: String,
+        default: null
     },
     games: [
         {
@@ -26,6 +29,8 @@ const shopsSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
+
+shopsSchema.plugin(uniqueValidator);
 
 const Shop = mongoose.model("Shop", shopsSchema);
 

@@ -2,7 +2,7 @@ import JWT from "jsonwebtoken";
 import { JWT_SECRET } from "../utils/config.js";
 import Customer from "../models/customers.js"
 
-const customerAuth = (req, res, next) => {
+const customerAuth = async (req, res, next) => {
     // retrieve cookies
     const {jwt} = req.cookies;
 
@@ -15,7 +15,7 @@ const customerAuth = (req, res, next) => {
     }
 
     // check if customer is present in database
-    const customer = Customer.findById(userId);
+    const customer = await Customer.findById(userId);
 
     if(!customer) {
         return res.status(400).json({message: "No customer found"});

@@ -27,19 +27,19 @@ const gamesSchema = new mongoose.Schema({
         required: true
     },
     selling_shop: {
-        type: mongoose.Types.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Shop",
         required: true
     },
     ratings: [
         {
-            type: mongoose.Types.Schema.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Rating"
         }
     ],
     reviews: [
         {
-            type: mongoose.Types.Schema.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Review"
         }
     ]

@@ -1,15 +1,41 @@
-const uploadGame = () => {
-    // shop id
+import Game from "../../models/games.js";
+import Shop from "../../models/shops.js";
+import gameObj from "../../zod/game.js";
+
+const uploadGame = async (req, res) => {
+    // shop id from rgister middleware
+    const shopId = req.shop;
 
     // game details
+    const {title, image, description, price } = req.body;
 
-    // validate game
+    // validation for game
+    gameObj.parse({
+        title,
+        image, 
+        description,
+        price
+    });
 
-    // save game in games collection
+    // game is saved
+    const game = new Game({
+        title,
+        image,
+        description,
+        price,
+        selling_shop: shopId
+    });
 
-    // refer to shop which sells the game
+    await game.save();
 
-    // respond
+    // update shop so it has the game in registery
+    await Shop.findByIdAndUpdate(shopId, {
+        $push: {
+            games: game._id
+        }
+    });
+
+    res.status(200).json({message: "Game uploaded successfully"});
 }
 
 export default uploadGame;
