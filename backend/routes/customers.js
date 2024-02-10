@@ -16,7 +16,7 @@ customersRouter.post("/login", loginCustomer);
 customersRouter.get("/dashboard", customerAuth, getCustomerDashboard);
 customersRouter.put("/update-profile", customerAuth, updateProfile);
 customersRouter.post("/buy-game", customerAuth, buyGame);
-customersRouter.post("/rating-game", customerAuth, rateGame);
-customersRouter.post("/review-game", customerAuth, reviewGame);
+customersRouter.post("/rating-game/:id", customerAuth, boughtGameAuth ,rateGame);
+customersRouter.post("/review-game/:id", customerAuth, boughtGameAuth,reviewGame);
 
 export default customersRouter;

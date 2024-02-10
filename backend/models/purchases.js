@@ -11,6 +11,11 @@ const purchasesSchema = new mongoose.Schema({
         ref: "Shop",
         required: true
     },
+    game_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Game",
+        required: true
+    },
     amount: {
         type: Number,
         required: true
@@ -19,10 +24,6 @@ const purchasesSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    games_purchased: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Game"
-    }]
 }, {
     timestamps: true
 });
