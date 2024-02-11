@@ -5,6 +5,10 @@
   src: url('./fonts/debug.ttf') format('truetype');
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .heading {
   font-family: 'Debug', sans-serif !important;
 }

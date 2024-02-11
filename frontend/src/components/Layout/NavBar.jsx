@@ -9,10 +9,12 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 import { FiShoppingCart } from "react-icons/fi";
 import LandingButton from "../utils/LandingButton";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <Flex mt={4} alignItems="center" justifyContent="space-between">
+      <Link to="/">
       <Heading
         color="purple.light"
         className="heading"
@@ -21,6 +23,7 @@ const NavBar = () => {
       >
         Game<span style={{ color: "#dde3fd" }}>Quest</span>
       </Heading>
+      </Link>
       <UnorderedList
         m={0}
         listStyleType="none"
@@ -43,7 +46,7 @@ const NavBar = () => {
         <IconButton rounded={"full"} variant="ghost">
           <SearchIcon color="white.light" cursor="pointer" />
         </IconButton>
-        <LandingButton text="Log in"/>
+        <Link to="/login"><LandingButton text="Log in"/></Link>
       </Flex>
     </Flex>
   );
