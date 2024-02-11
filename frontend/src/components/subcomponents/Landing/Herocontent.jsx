@@ -1,17 +1,31 @@
-import { Box, Flex, Image } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Subheading from "../../utils/Subheading";
 import Subtext from "../../utils/Subtext";
 import LandingButton from "../../utils/LandingButton";
 import { useState } from "react";
 import HoverImage from "../../utils/HoverImage";
 import Shadow from "../../utils/Shadow";
+import { motion } from 'framer-motion';
 
 const Herocontent = () => {
   const [changingText, setChangingText] = useState("Delve into the gameplay");
-
+  
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" mt={20}>
       {/* customer content */}
+      <motion.div 
+        initial={{
+          opacity: 0,
+          transform: "translateX(50px)",
+        }}
+        whileInView={{
+          opacity: 1,
+          transform: "translateX(0)"
+        }}
+        transition={{
+          duration: 0.6
+        }}
+      >
       <Flex
         alignItems="center"
         justifyContent="space-around"
@@ -54,8 +68,22 @@ const Herocontent = () => {
           <LandingButton text="Buy now" />
         </Flex>
       </Flex>
+      </motion.div>
 
       {/* vendor content */}
+      <motion.div 
+        initial={{
+          opacity: 0,
+          transform: "translateX(-50px)",
+        }}
+        whileInView={{
+          opacity: 1,
+          transform: "translateX(0)"
+        }}
+        transition={{
+          duration: 0.6
+        }}
+      >
       <Flex
         alignItems="center"
         justifyContent="space-around"
@@ -97,6 +125,7 @@ const Herocontent = () => {
           />
         </Box>
       </Flex>
+      </motion.div>
     </Flex>
   );
 };

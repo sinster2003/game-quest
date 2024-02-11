@@ -5,6 +5,7 @@ const LandingButton = ({text}) => {
     <Button
       bgGradient={"linear(to-r, purple.buttonLeft, purple.buttonRight)"}
       _hover={{ boxShadow: '0px 0px 10px 5px #7a6ac3'}}
+      color="white"
       _active={{}}
       _focus={{}}
       w={"fit-content"}
