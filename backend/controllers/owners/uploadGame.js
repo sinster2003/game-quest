@@ -33,6 +33,10 @@ const uploadGame = async (req, res) => {
         $push: {
             games: game._id
         }
+    }, {
+        new: true,
+        runValidators: true,
+        context: "query"
     });
 
     res.status(200).json({message: "Game uploaded successfully"});

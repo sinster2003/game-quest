@@ -1,4 +1,4 @@
-import Purchase from "../models/purchases";
+import Purchase from "../models/purchases.js";
 
 const boughtGameAuth = async (req, res, next) => {
     // customer id who rates or reviews
@@ -6,11 +6,12 @@ const boughtGameAuth = async (req, res, next) => {
 
     // game id to be rated or reviewed
     const gameId = req.params.id;
+    console.log(gameId);
 
-    const gameBought = await Purchase.find({customer_id: customerId, game_id: gameId});
+    const gameBought = await Purchase.findOne({customer_id: customerId, game_id: gameId});
 
     if(!gameBought) {
-        return res.status(400).json({message: "Please buy the game from the marketplace to review it"});
+        return res.status(400).json({message: "Please buy the game from the marketplace to rate or review it"});
     }
 
     req.game = gameId;

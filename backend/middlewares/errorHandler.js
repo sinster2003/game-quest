@@ -6,7 +6,7 @@ export const errorHandler = (error, req, res, next) => {
     }
 
     if(error.name === "ValidationError") {
-        return res.status(400).json({error: "Invalid Data"});
+        return res.status(400).json({error: "Invalid Data", error});
     }
 
     if(error.name === "ZodError") {

@@ -25,6 +25,10 @@ const deleteGame =  async (req, res) => {
         $pull: {
             games: gameId
         }
+    }, {
+        new: true,
+        runValidators: true,
+        context: "query"
     });
 
     // respond

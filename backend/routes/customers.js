@@ -7,6 +7,7 @@ import updateProfile from "../controllers/customers/updateProfile.js";
 import buyGame from "../controllers/customers/buyGame.js";
 import rateGame from "../controllers/customers/rateGame.js";
 import reviewGame from "../controllers/customers/reviewGame.js";
+import boughtGameAuth from './../middlewares/boughtGameAuth.js';
 
 const customersRouter = express.Router();
 
@@ -16,7 +17,7 @@ customersRouter.post("/login", loginCustomer);
 customersRouter.get("/dashboard", customerAuth, getCustomerDashboard);
 customersRouter.put("/update-profile", customerAuth, updateProfile);
 customersRouter.post("/buy-game", customerAuth, buyGame);
-customersRouter.post("/rating-game/:id", customerAuth, boughtGameAuth ,rateGame);
-customersRouter.post("/review-game/:id", customerAuth, boughtGameAuth,reviewGame);
+customersRouter.post("/rating-game/:id", customerAuth, boughtGameAuth, rateGame);
+customersRouter.post("/review-game/:id", customerAuth, boughtGameAuth, reviewGame);
 
 export default customersRouter;

@@ -1,10 +1,10 @@
-import Game from "../../models/games";
-import Rating from "../../models/ratings";
-import ratingObj from "../../zod/rating";
+import Game from "../../models/games.js";
+import Rating from "../../models/ratings.js";
+import ratingObj from "../../zod/rating.js";
 
 const rateGame = async (req, res) => {
     // customer_id
-    const customerId = req.customerId;
+    const customerId = req.customer;
 
     // game_id
     const gameId = req.game;
@@ -16,6 +16,12 @@ const rateGame = async (req, res) => {
     ratingObj.parse({
         rating
     });
+
+    const alreadyRated = await Rating.findOne({customer_id: customerId, game_id: gameId});
+
+    if(alreadyRated) {
+        return res.status(400).json({message: "The game has already been rated"});
+    }
 
     // add rating to the rating collection
     const ratingDocument = new Rating({
@@ -31,10 +37,14 @@ const rateGame = async (req, res) => {
         $push: {
             ratings: ratingDocument._id
         }
+    }, {
+        new: true,
+        runValidators: true,
+        context: "query"
     });
 
     // respond
-    res.status().json({message: `The game has been rated with ${rating} stars`});
+    res.status(200).json({message: `The game has been rated with ${rating} stars`});
 }
 
 export default rateGame;

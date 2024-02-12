@@ -42,7 +42,11 @@ const registerMarketplace = async (req, res) => {
     await shop.save();
 
     // updation of owner referring to the shop
-    await Owner.findByIdAndUpdate(ownerId, {shop: shop._id});
+    await Owner.findByIdAndUpdate(ownerId, {shop: shop._id}, {
+        new: true,
+        runValidators: true,
+        context: "query"
+    });
 
     res.status(200).json({
         message: "Marketplace successfully registered"
