@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../App";
-import { CustomerDashboard, Landing, Login, OwnerDashboard, Signup } from "../pages";
+import { BuyOrSell, CustomerDashboard, Landing, Login, OwnerDashboard, Signup } from "../pages";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +18,10 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: <Login />
+            },
+            {
+                path: "/buy-or-sell",
+                element: <BuyOrSell/>
             },
             {
                 path: "/customer-dashboard",
