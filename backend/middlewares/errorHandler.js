@@ -1,5 +1,5 @@
 export const errorHandler = (error, req, res, next) => {
-    console.log(error.name);
+    console.log(error);
 
     if(error.name === "CastError") {
         return res.status(400).json({error: "malformatted id"});
@@ -10,7 +10,8 @@ export const errorHandler = (error, req, res, next) => {
     }
 
     if(error.name === "ZodError") {
-        return res.status(400).json({error: "Invalid Inputs"});
+        console.log(error);
+        return res.status(400).json({error: `Invalid Inputs ${error}`});
     }
 
     if(error.name === "JsonWebTokenError") {

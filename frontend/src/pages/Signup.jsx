@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import Subheading from "./../components/utils/Subheading";
 import Subtext from "../components/utils/Subtext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import FormInput from "../components/utils/FormInput";
 import LandingButton from "./../components/utils/LandingButton";
 import useFormSchema from "../hooks/useFormSchema";
@@ -13,6 +13,8 @@ import axios from "axios";
 const Signup = () => {
   const { register, errors, handleSubmit } = useFormSchema(signup);
   const toast = useToaster();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   
   useEffect(() => {
     if (Object.keys(errors).length) {
@@ -21,7 +23,24 @@ const Signup = () => {
   }, [errors]);
 
   const onSubmit = async (data) => {
-    // await axios.post(`/api/v1/${}/signup`, )
+    if(!searchParams.get("role")) {
+      navigate("/buy-or-sell");
+    }
+
+    try {
+      const response = await axios.post(`http://localhost:3001/api/v1/${searchParams.get("role")}s/signup`, {
+        name: data.fullname,
+        ...data
+      });
+      const result = await response.data;
+      localStorage.setItem("user", JSON.stringify({userId: result[`${searchParams.get("role")}Id`], isOwner: result.isOwner}));
+      toast("Successful Login", result?.message, "success");
+      navigate(`/${searchParams.get("role")}-dashboard`)
+    }
+    catch(error) {
+      console.log(error);
+      toast("Unsuccessful Login", `Error: ${error.response.data.message || error.response.statusText}`, "error");
+    }
   };
 
   return (

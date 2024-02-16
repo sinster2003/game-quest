@@ -6,6 +6,8 @@ const customerAuth = async (req, res, next) => {
     // retrieve cookies
     const {jwt} = req.cookies;
 
+    console.log(jwt);
+
     // check jwt
     const {userId, isOwner} = JWT.verify(jwt, JWT_SECRET);
 

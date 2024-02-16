@@ -6,6 +6,7 @@ import { useState } from "react";
 import HoverImage from "../../utils/HoverImage";
 import Shadow from "../../utils/Shadow";
 import { motion } from 'framer-motion';
+import { Link } from "react-router-dom";
 
 const Herocontent = () => {
   const [changingText, setChangingText] = useState("Delve into the gameplay");
@@ -65,7 +66,7 @@ const Herocontent = () => {
         <Flex flexDirection="column" w={{ base: 300, md: 600 }}>
           <Subheading text={changingText} size="5xl" />
           <Subtext text="Enjoy the look and feel of the games you buy. If you are a vendor sell some amazing games contributing to the gamer community" />
-          <LandingButton text="Buy now" />
+          <Link to="/login"><LandingButton text="Buy now" /></Link>
         </Flex>
       </Flex>
       </motion.div>
@@ -93,7 +94,7 @@ const Herocontent = () => {
         <Flex flexDirection="column" w={{ base: 300, md: 600 }} mt={20}>
           <Subheading text={"Sell awesome games"} size="5xl" />
           <Subtext text="Contributing to the gamer community? Sell some good games and register your online gaming marketplace" />
-          <LandingButton text="Sell Now" />
+          <Link to="/login?role=owner"><LandingButton text="Sell Now" /></Link>
         </Flex>
 
         <Box

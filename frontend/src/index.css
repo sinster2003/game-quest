@@ -25,7 +25,14 @@
   border-radius: 10px;
 }
 
+/*error toast*/
 .css-117s6mu {
+  color: rgb(231, 206, 255) !important;
+  background-color: rgb(69, 47, 69) !important;
+}
+
+/*success toast*/
+.css-i20fwt {
   color: rgb(231, 206, 255) !important;
   background-color: rgb(127, 69, 127) !important;
 }

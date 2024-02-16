@@ -1,24 +1,44 @@
 import { Flex, Input, Select, Text } from "@chakra-ui/react";
 import Subheading from "./../components/utils/Subheading";
 import Subtext from "../components/utils/Subtext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import FormInput from "../components/utils/FormInput";
 import LandingButton from "../components/utils/LandingButton";
 import useFormSchema from "../hooks/useFormSchema";
 import login from "../zod/login";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import useToaster from "../hooks/useToaster";
+import axios from "axios";
 
 const Login = () => {
-  const { register, errors, handleSubmit } = useFormSchema(login);
+  const [searchParams] = useSearchParams();
+  const { register, errors, handleSubmit } = useFormSchema(login, {
+    // default value for isOwner selectElement
+    isOwner: searchParams.get("role") || "customer"
+  });
+
+  const toast = useToaster();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (Object.keys(errors).length) {
-      console.log(Object.values(errors)[0].message);
+      toast(`${Object.keys(errors)[0]} Error`, Object.values(errors)[0].message, "error");
     }
   }, [errors]);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    console.log("Data", data);
+    try {
+      const response = await axios.post(`/api/v1/${data?.isOwner}s/login`, data);
+      const result = await response.data;
+      localStorage.setItem("user", JSON.stringify({userId: result[`${data?.isOwner}Id`], isOwner: result.isOwner}));
+      toast("Successful Login", result?.message, "success");
+      navigate(`/${data.isOwner}-dashboard`);
+    }
+    catch(error) {
+      console.log(error);
+      toast("Unsuccessful Login", `Error: ${error.response.data.message || error.response.statusText}`, "error");
+    }
   };
 
   return (
@@ -31,7 +51,7 @@ const Login = () => {
       />
       <Text mt={2} mb={8}>
         New To GameQuest?{" "}
-        <Link to="/signup">
+        <Link to="/buy-or-sell">
           <span style={{ color: "#7a6ac3" }}>Sign Up</span>
         </Link>
       </Text>

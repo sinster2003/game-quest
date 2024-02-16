@@ -30,7 +30,7 @@ const loginOwner = async (req, res) => {
     generateToken(isExistingOwner._id, true, res);
 
     // response
-    res.status(200).json({message: `${username} logged in successfully`});
+    res.status(200).json({message: `${username} logged in successfully`, ownerId: isExistingOwner._id, isOwner: isExistingOwner.isOwner});
 }
 
 export default loginOwner;

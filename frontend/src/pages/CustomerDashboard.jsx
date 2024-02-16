@@ -1,8 +1,12 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import Dashboardheader from './../components/utils/Dashboardheader';
 import LandingButton from './../components/utils/LandingButton';
+import { useRecoilValue } from 'recoil';
+import { userSelector } from '../atoms/userAtom';
 
 const CustomerDashboard = () => {
+  const userLoggedInData = useRecoilValue(userSelector);
+  console.log(userLoggedInData)
   return (
     <Flex flexDirection="column" mx={300} mt={10}>
       <Dashboardheader/>

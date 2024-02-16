@@ -45,7 +45,7 @@ const signupCustomer = async (req, res) => {
     generateToken(customer._id, false, res);
 
     // response
-    res.status(200).json({message: `${username} signed up successfully`});
+    res.status(200).json({message: `${username} signed up successfully`, customerId: customer._id, isOwner: customer.isOwner});
 }
 
 export default signupCustomer;

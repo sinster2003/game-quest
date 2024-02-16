@@ -45,7 +45,7 @@ const signupOwner = async (req, res) => {
     generateToken(owner._id, true, res);
 
     // response
-    res.status(200).json({message: `${username} signed up successfully`});
+    res.status(200).json({message: `${username} signed up successfully`, ownerId: owner._id, isOwner: owner.isOwner});
 }
 
 export default signupOwner;

@@ -20,6 +20,7 @@ const NavBar = () => {
         className="heading"
         fontSize="6xl"
         textAlign={{ base: "center", sm: "left" }}
+        w={250}
       >
         Game<span style={{ color: "#dde3fd" }}>Quest</span>
       </Heading>
@@ -41,7 +42,7 @@ const NavBar = () => {
           Popular
         </ListItem>
       </UnorderedList>
-      <Flex alignItems="center" gap={6}>
+      <Flex alignItems="center" justifyContent="flex-end" gap={7} w={250}>
         <Icon as={FiShoppingCart} color="purple.banner" cursor="pointer" boxSize={5}/>
         <IconButton rounded={"full"} variant="ghost">
           <SearchIcon color="white.light" cursor="pointer" />

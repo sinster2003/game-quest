@@ -30,7 +30,7 @@ const loginCustomer = async (req, res) => {
     generateToken(isExistingCustomer._id, false, res);
 
     // response
-    res.status(200).json({message: `${username} logged in successfully`});
+    res.status(200).json({message: `${username} logged in successfully`, customerId: isExistingCustomer._id, isOwner: isExistingCustomer.isOwner});
 }
 
 export default loginCustomer;
