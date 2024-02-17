@@ -1,15 +1,15 @@
 import { Avatar, Flex, Text } from '@chakra-ui/react'
 import LandingButton from './LandingButton';
 
-const Dashboardheader = () => {
+const Dashboardheader = ({userLoggedInData}) => {
   return (
     <Flex justifyContent="space-between" alignItems="center" mb={8}>
         <Flex flexDirection="column" gap={1}>
-          <Text color="purple.light" className="sub-heading" fontSize="2xl">@sinster2003</Text>
-          <Text fontSize="md" pb={4}>sindhurvshabaraya2318@gmail.com</Text>
+          <Text color="purple.light" className="sub-heading" fontSize="2xl">@{userLoggedInData?.username}</Text>
+          <Text fontSize="md" pb={4}>{userLoggedInData?.email}</Text>
           <LandingButton text="Update Profile"/>
         </Flex>
-        <Avatar name="Customer" size="xl" border="5px solid #8daece"/>
+        <Avatar name={userLoggedInData?.name} size="xl" border="5px solid #8757f7" bg="#b0a0fa"/>
     </Flex>
   )
 }

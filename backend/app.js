@@ -10,8 +10,13 @@ connectDb(); // connecting database
 
 const app = express();
 
+const corsOption = {
+    origin: true,
+    credentials: true
+}
+
 // middlewares
-app.use(cors()); // avoid cors errors
+app.use(cors(corsOption)); // avoid cors errors
 app.use(express.json({limit: "50mb"})); // access req.body
 app.use(express.urlencoded({extended: true, limit: "50mb"})); // parses form data
 app.use(cookieParser());

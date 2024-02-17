@@ -9,37 +9,48 @@ import signup from "../zod/signup";
 import { useEffect } from "react";
 import useToaster from "../hooks/useToaster";
 import axios from "axios";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { userAtom } from "../atoms/userAtom";
 
 const Signup = () => {
   const { register, errors, handleSubmit } = useFormSchema(signup);
   const toast = useToaster();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [userLoggedInData, setUserLoggedInData] = useRecoilState(userAtom);
   
   useEffect(() => {
+    if(userLoggedInData?.userId) {
+      const role = userLoggedInData?.isOwner ? "owner" : "customer";
+      navigate(`/${role}-dashboard`);
+    }
+
     if (Object.keys(errors).length) {
       toast(`${Object.keys(errors)[0]} Error`, Object.values(errors)[0].message, "error");
     }
-  }, [errors]);
+  }, [errors, userLoggedInData]);
 
   const onSubmit = async (data) => {
+    console.log(data);
     if(!searchParams.get("role")) {
       navigate("/buy-or-sell");
     }
 
     try {
-      const response = await axios.post(`http://localhost:3001/api/v1/${searchParams.get("role")}s/signup`, {
+      const response = await axios.post(`/api/v1/${searchParams.get("role")}s/signup`, {
         name: data.fullname,
         ...data
       });
       const result = await response.data;
-      localStorage.setItem("user", JSON.stringify({userId: result[`${searchParams.get("role")}Id`], isOwner: result.isOwner}));
+      const signupObject = { userId: result[`${searchParams.get("role")}Id`], isOwner: result.isOwner };
+      localStorage.setItem("user", JSON.stringify(signupObject));
+      setUserLoggedInData(signupObject);
       toast("Successful Login", result?.message, "success");
       navigate(`/${searchParams.get("role")}-dashboard`)
     }
     catch(error) {
       console.log(error);
-      toast("Unsuccessful Login", `Error: ${error.response.data.message || error.response.statusText}`, "error");
+      toast("Unsuccessful Login", `Error: ${error?.response?.data?.message || error?.response?.statusText}`, "error");
     }
   };
 

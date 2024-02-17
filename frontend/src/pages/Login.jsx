@@ -9,6 +9,8 @@ import login from "../zod/login";
 import { useEffect } from "react";
 import useToaster from "../hooks/useToaster";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { userAtom } from "../atoms/userAtom";
 
 const Login = () => {
   const [searchParams] = useSearchParams();
@@ -19,19 +21,27 @@ const Login = () => {
 
   const toast = useToaster();
   const navigate = useNavigate();
+  const [userLoggedInData, setUserLoggedInData] = useRecoilState(userAtom);
 
   useEffect(() => {
+    if(userLoggedInData?.userId) {
+      const role = userLoggedInData?.isOwner ? "owner" : "customer";
+      navigate(`/${role}-dashboard`);
+    }
+
     if (Object.keys(errors).length) {
       toast(`${Object.keys(errors)[0]} Error`, Object.values(errors)[0].message, "error");
     }
-  }, [errors]);
+  }, [errors, userLoggedInData]);
 
   const onSubmit = async (data) => {
     console.log("Data", data);
     try {
       const response = await axios.post(`/api/v1/${data?.isOwner}s/login`, data);
       const result = await response.data;
-      localStorage.setItem("user", JSON.stringify({userId: result[`${data?.isOwner}Id`], isOwner: result.isOwner}));
+      const loginObject = {userId: result[`${data?.isOwner}Id`], isOwner: result.isOwner}
+      localStorage.setItem("user", JSON.stringify(loginObject));
+      setUserLoggedInData(loginObject);
       toast("Successful Login", result?.message, "success");
       navigate(`/${data.isOwner}-dashboard`);
     }
