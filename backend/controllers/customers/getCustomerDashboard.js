@@ -7,7 +7,7 @@ const getCustomerDashboard = async (req, res) => {
   console.log(customerId)
   
   // find and fetch from Customer database
-  const customerDetails = await Customer.findById(customerId).select("-password").select("-updatedAt");
+  const customerDetails = await Customer.findById(customerId).select("-password").select("-updatedAt").populate("games");
 
   if(!customerDetails) {
     return res.status(404).json({message: "No customer found"});

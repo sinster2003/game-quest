@@ -8,7 +8,6 @@ import buyGame from "../controllers/customers/buyGame.js";
 import rateGame from "../controllers/customers/rateGame.js";
 import reviewGame from "../controllers/customers/reviewGame.js";
 import boughtGameAuth from './../middlewares/boughtGameAuth.js';
-import getProfile from "../controllers/customers/getProfile.js";
 import logoutCustomer from "../controllers/customers/logoutCustomer.js";
 
 const customersRouter = express.Router();
@@ -17,7 +16,6 @@ const customersRouter = express.Router();
 customersRouter.post("/signup", signupCustomer);
 customersRouter.post("/login", loginCustomer);
 customersRouter.post("/logout", customerAuth, logoutCustomer);
-customersRouter.get("/get-profile", customerAuth, getProfile);
 customersRouter.get("/dashboard", customerAuth, getCustomerDashboard);
 customersRouter.put("/update-profile", customerAuth, updateProfile);
 customersRouter.post("/buy-game", customerAuth, buyGame);

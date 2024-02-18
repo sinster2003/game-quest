@@ -35,19 +35,19 @@ const Login = () => {
   }, [errors, userLoggedInData]);
 
   const onSubmit = async (data) => {
-    console.log("Data", data);
     try {
       const response = await axios.post(`/api/v1/${data?.isOwner}s/login`, data);
       const result = await response.data;
       const loginObject = {userId: result[`${data?.isOwner}Id`], isOwner: result.isOwner}
       localStorage.setItem("user", JSON.stringify(loginObject));
       setUserLoggedInData(loginObject);
-      toast("Successful Login", result?.message, "success");
+      localStorage.removeItem("logged-out");
+      toast("Successful Login", "User Logged in successfully", "success");
       navigate(`/${data.isOwner}-dashboard`);
     }
     catch(error) {
       console.log(error);
-      toast("Unsuccessful Login", `Error: ${error.response.data.message || error.response.statusText}`, "error");
+      toast("Unsuccessful Login", `Error: ${error?.response?.data?.message || error?.response?.statusText}`, "error");
     }
   };
 

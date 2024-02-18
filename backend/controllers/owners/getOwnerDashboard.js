@@ -5,7 +5,7 @@ const getOwnerDashboard = async (req, res) => {
   const ownerId = req.owner;
   
   // find and fetch from owner database
-  const ownerDetails = await Owner.findById(ownerId).select("-password").select("-updatedAt");
+  const ownerDetails = await Owner.findById(ownerId).select("-password").select("-updatedAt").populate("shop");
 
   if(!ownerDetails) {
     return res.status(404).json({message: "No owner found"});

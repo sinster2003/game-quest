@@ -45,6 +45,7 @@ const Signup = () => {
       const signupObject = { userId: result[`${searchParams.get("role")}Id`], isOwner: result.isOwner };
       localStorage.setItem("user", JSON.stringify(signupObject));
       setUserLoggedInData(signupObject);
+      localStorage.removeItem("logged-out");
       toast("Successful Login", result?.message, "success");
       navigate(`/${searchParams.get("role")}-dashboard`)
     }

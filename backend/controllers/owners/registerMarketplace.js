@@ -49,7 +49,8 @@ const registerMarketplace = async (req, res) => {
     });
 
     res.status(200).json({
-        message: "Marketplace successfully registered"
+        message: "Marketplace successfully registered",
+        shop
     });
 }
 

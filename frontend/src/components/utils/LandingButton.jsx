@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react'
 
-const LandingButton = ({type, text, w, onClick}) => {
+const LandingButton = ({type, text, w, my, onClick}) => {
   return (
     <Button
       bgGradient={"linear(to-r, purple.buttonLeft, purple.buttonRight)"}
@@ -10,6 +10,7 @@ const LandingButton = ({type, text, w, onClick}) => {
       _focus={{}}
       w={w || "fit-content"}
       type={type || "button"}
+      my={my}
       onClick={onClick}
     >
       {text}

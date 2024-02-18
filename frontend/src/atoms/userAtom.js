@@ -16,7 +16,7 @@ export const userSelector = selector({
         let result;
         if(get(userAtom)) {
             const role = get(userAtom).isOwner ? "owners" : "customers";
-            const response = await axios.get(`/api/v1/${role}/get-profile`, {withCredentials: true});
+            const response = await axios.get(`/api/v1/${role}/dashboard`, {withCredentials: true});
             result = await response.data;
         }
         return result;

@@ -20,8 +20,6 @@ const NavBar = () => {
   const toast = useToaster();
   const navigate = useNavigate();
 
-  console.log(userLoggedInData);
-
   const handleLogout = async () => {
     try{
       const role = userLoggedInData.isOwner ? "owners": "customers";
@@ -29,6 +27,7 @@ const NavBar = () => {
       const result = await response.data;
       toast("Successful Logout", `${result?.message}`, "success");
       localStorage.removeItem("user");
+      localStorage.setItem("logged-out", JSON.stringify(true));
       setUserLoggedInData(null);
       navigate("/");
     }
@@ -36,8 +35,6 @@ const NavBar = () => {
       toast("Unsuccessful Logout", `${result?.message}`, "error");
     }
   }
-
-  console.log(userLoggedInData);
 
   return (
     <Flex mt={4} alignItems="center" justifyContent="space-between">
