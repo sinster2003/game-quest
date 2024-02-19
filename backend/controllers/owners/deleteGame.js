@@ -32,7 +32,7 @@ const deleteGame =  async (req, res) => {
     });
 
     // respond
-    res.status(200).json({message: "Game removed from the marketplace"});
+    res.status(200).json({message: "Game removed from the marketplace", games: isExistingGameInShop.games});
 }
 
 export default deleteGame;

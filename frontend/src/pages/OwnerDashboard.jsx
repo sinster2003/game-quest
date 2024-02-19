@@ -57,7 +57,7 @@ const OwnerDashboard = () => {
       {(userLoggedInDataLoadable?.contents?.shop?._id) && <UploadModal isOpen={isOpen} onClose={onClose}/>}
 
       {/* display selling games */}
-      <Flex flexWrap="wrap" my={10} gap={10}>
+      <Flex flexWrap="wrap" my={10} gap={10} justifyContent="center">
       {userLoggedInDataLoadable?.contents?.shop?.games?.map(game => {
         return <SellGameCard key={game} game_id={game}/>
       })}
