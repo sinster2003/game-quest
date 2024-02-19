@@ -13,17 +13,15 @@ import {
 import LandingButton from "../utils/LandingButton";
 import axios from "axios";
 import useToaster from "../../hooks/useToaster";
-import { useRecoilStateLoadable } from "recoil";
-import { userSelector } from "../../atoms/userAtom";
+import { useRecoilState } from "recoil";
+import ModalInput from "../utils/ModalInput";
+import { userAtom } from "../../atoms/userAtom";
 
 const RegisterModal = ({ isOpen, onClose }) => {
   const [shopName, setShopName] = useState("");
   const [shopLocation, setShopLocation] = useState("");
   const toast = useToaster();
-  const [
-    userLoggedInDataLoadable,
-    setUserLoggedInDataLoadable,
-  ] = useRecoilStateLoadable(userSelector);
+  const [userLoggedInData, setUserLoggedInData] = useRecoilState(userAtom);
 
   const handleRegistration = async () => {
     try {
@@ -34,11 +32,12 @@ const RegisterModal = ({ isOpen, onClose }) => {
       });
       const result = await response.data;
       toast("Registration successful", result?.message, "success");
-      setUserLoggedInDataLoadable((prevData) => ({
-        ...prevData,
-        shopId: result?.shop?._id,
-      }));
+      setUserLoggedInData({...userLoggedInData, shop: result?.shop})
+      setShopName("");
+      setShopLocation("");
+      onClose();
     } catch (error) {
+      console.log(error);
       toast(
         "Error occurred",
         "Registration of the marketplace was unsuccessful",
@@ -54,26 +53,8 @@ const RegisterModal = ({ isOpen, onClose }) => {
         <ModalHeader>Register Your Digital Marketplace</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Input
-            my={2}
-            value={shopName}
-            onChange={(e) => setShopName(e.target.value)}
-            border="2px solid"
-            borderColor="purple.shadowLight"
-            _hover={{}}
-            focusBorderColor="purple.600"
-            placeholder="Enter the name of the marketplace"
-          />
-          <Input
-            my={2}
-            value={shopLocation}
-            onChange={(e) => setShopLocation(e.target.value)}
-            border="2px solid"
-            borderColor="purple.shadowLight"
-            _hover={{}}
-            focusBorderColor="purple.600"
-            placeholder="Enter the location"
-          />
+          <ModalInput value={shopName} setValue={setShopName} placeholder="Enter the name of the marketplace"/>
+          <ModalInput value={shopLocation} setValue={setShopLocation} placeholder="Enter the location"/>
           <Input type="file" accept="image/*" hidden />
           <LandingButton my={2} text="Add a logo" />
         </ModalBody>

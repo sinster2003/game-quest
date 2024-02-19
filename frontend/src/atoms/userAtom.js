@@ -12,7 +12,6 @@ export const userSelector = selector({
     key: "userSelector",
     get: async ({get}) => {
         // database call to fetch user info
-        console.log(get(userAtom));
         let result;
         if(get(userAtom)) {
             const role = get(userAtom).isOwner ? "owners" : "customers";

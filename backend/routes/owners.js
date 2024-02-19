@@ -9,6 +9,7 @@ import updateProfile from "../controllers/owners/updateProfile.js";
 import registerMarketplace from "../controllers/owners/registerMarketplace.js";
 import registeredMarketplace from "../middlewares/registeredMarketplace.js";
 import logoutOwner from "../controllers/owners/logoutOwner.js";
+import getGame from "../controllers/owners/getGame.js";
 
 const ownersRouter = express.Router();
 
@@ -19,6 +20,7 @@ ownersRouter.post("/logout", ownerAuth, logoutOwner);
 ownersRouter.get("/dashboard", ownerAuth, getOwnerDashboard);
 ownersRouter.put("/update-profile", ownerAuth, updateProfile);
 ownersRouter.post("/register-marketplace", ownerAuth, registerMarketplace);
+ownersRouter.get("/get-game/:id", ownerAuth, registeredMarketplace, getGame);
 ownersRouter.post("/upload-game", ownerAuth, registeredMarketplace, uploadGame);
 ownersRouter.delete("/delete-game/:id", ownerAuth, registeredMarketplace, deleteGame);
 

@@ -29,7 +29,7 @@ const uploadGame = async (req, res) => {
     await game.save();
 
     // update shop so it has the game in registery
-    await Shop.findByIdAndUpdate(shopId, {
+    const shop = await Shop.findByIdAndUpdate(shopId, {
         $push: {
             games: game._id
         }
@@ -37,9 +37,9 @@ const uploadGame = async (req, res) => {
         new: true,
         runValidators: true,
         context: "query"
-    });
+    }).populate("games");
 
-    res.status(200).json({message: "Game uploaded successfully"});
+    res.status(200).json({message: "Game uploaded successfully", games: shop.games});
 }
 
 export default uploadGame;

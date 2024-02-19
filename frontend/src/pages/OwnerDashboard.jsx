@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import RegisterModal from '../components/subcomponents/RegisterModal';
 import UploadModal from '../components/subcomponents/UploadModal';
+import SellGameCard from '../components/subcomponents/SellGameCard';
 
 const OwnerDashboard = () => {
   const userLoggedInDataLoadable = useRecoilValueLoadable(userSelector);
@@ -44,18 +45,23 @@ const OwnerDashboard = () => {
       <Box w="full" h={0.1} bg="purple.shadowLight"></Box>
       <Flex flexDirection="column" mt={8} alignItems="center" gap={4}>
         <Text className="sub-heading" fontSize="2xl" textAlign="center" w="full" mb={3}>Games Sold</Text>
-        <Text>No games sold</Text>
-        {!userLoggedInDataLoadable?.contents?.shopId && <LandingButton text="Register Marketplace" onClick={onOpen}/>}
-        {userLoggedInDataLoadable?.contents?.shopId && <LandingButton text="Upload Game" onClick={() => {}}/>}
+        {userLoggedInDataLoadable?.contents?.shop?.games?.length === 0 && <Text>No games sold</Text>}
+        {!userLoggedInDataLoadable?.contents?.shop?._id && <LandingButton text="Register Marketplace" onClick={onOpen}/>}
+        {userLoggedInDataLoadable?.contents?.shop?._id && <LandingButton text="Upload Game" onClick={onOpen}/>}
       </Flex>
 
       {/* Register a marketplace */}
-      {(!userLoggedInDataLoadable?.contents?.shopId) && <RegisterModal isOpen={isOpen} onClose={onClose}/>}
+      {(!userLoggedInDataLoadable?.contents?.shop?._id) && <RegisterModal isOpen={isOpen} onClose={onClose}/>}
 
       {/*upload a game*/}
-      {(userLoggedInDataLoadable?.contents?.shopId) &&  <UploadModal isOpen={isOpen} onClose={onClose}/>}
+      {(userLoggedInDataLoadable?.contents?.shop?._id) && <UploadModal isOpen={isOpen} onClose={onClose}/>}
 
       {/* display selling games */}
+      <Flex flexWrap="wrap" my={10} gap={10}>
+      {userLoggedInDataLoadable?.contents?.shop?.games?.map(game => {
+        return <SellGameCard key={game} game_id={game}/>
+      })}
+      </Flex>
     </Flex>
   )
 }
