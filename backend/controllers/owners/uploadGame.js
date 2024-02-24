@@ -39,7 +39,7 @@ const uploadGame = async (req, res) => {
         context: "query"
     }).populate("games");
 
-    res.status(200).json({message: "Game uploaded successfully", games: shop.games});
+    res.status(200).json({message: "Game uploaded successfully", gameId: game._id});
 }
 
 export default uploadGame;

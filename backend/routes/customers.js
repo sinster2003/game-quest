@@ -15,7 +15,7 @@ const customersRouter = express.Router();
 // customerAuth verifiers jwt of a customer
 customersRouter.post("/signup", signupCustomer);
 customersRouter.post("/login", loginCustomer);
-customersRouter.post("/logout", customerAuth, logoutCustomer);
+customersRouter.post("/logout", logoutCustomer);
 customersRouter.get("/dashboard", customerAuth, getCustomerDashboard);
 customersRouter.put("/update-profile", customerAuth, updateProfile);
 customersRouter.post("/buy-game", customerAuth, buyGame);

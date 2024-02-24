@@ -13,15 +13,12 @@ import {
 import LandingButton from "../utils/LandingButton";
 import axios from "axios";
 import useToaster from "../../hooks/useToaster";
-import { useRecoilState } from "recoil";
 import ModalInput from "../utils/ModalInput";
-import { userAtom } from "../../atoms/userAtom";
 
-const RegisterModal = ({ isOpen, onClose }) => {
+const RegisterModal = ({ isOpen, onClose, setIsShop }) => {
   const [shopName, setShopName] = useState("");
   const [shopLocation, setShopLocation] = useState("");
   const toast = useToaster();
-  const [userLoggedInData, setUserLoggedInData] = useRecoilState(userAtom);
 
   const handleRegistration = async () => {
     try {
@@ -32,7 +29,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
       });
       const result = await response.data;
       toast("Registration successful", result?.message, "success");
-      setUserLoggedInData({...userLoggedInData, shop: result?.shop})
+      setIsShop(true);
       setShopName("");
       setShopLocation("");
       onClose();

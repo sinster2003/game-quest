@@ -5,6 +5,7 @@ import Subheading from '../../utils/Subheading'
 import Subtext from '../../utils/Subtext'
 import { MdKeyboardDoubleArrowDown } from 'react-icons/md'
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom'
 
 const Herobanner = () => {
   return (
@@ -27,7 +28,7 @@ const Herobanner = () => {
         <Subheading text="Buy and sell" size="5xl"/>
         <Subheading text="your favourite games" size="6xl"/>
         <Subtext text="An extensive marketplace for gamers who dream to own the most popular and renowned games"/>
-        <LandingButton text="Shop now"/>
+        <Link to="/shop-now"><LandingButton text="Shop now"/></Link>
       </Flex>
       <Box position="relative">
         <Image src="/gaming-controller.png" alt="gaming-controller-image" w={{base: 300, md: 550}} />

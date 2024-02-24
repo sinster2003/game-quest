@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../App";
 import { BuyOrSell, CustomerDashboard, Landing, Login, OwnerDashboard, Signup } from "../pages";
+import Shopping from "../pages/Shopping";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "/owner-dashboard",
                 element: <OwnerDashboard />
+            },
+            {
+                path: "/shop-now",
+                element: <Shopping/>
             }
         ]
     }

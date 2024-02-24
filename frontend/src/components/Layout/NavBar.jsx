@@ -68,9 +68,9 @@ const NavBar = () => {
       </UnorderedList>
       <Flex alignItems="center" justifyContent="flex-end" gap={7} w={250}>
         <Icon as={FiShoppingCart} color="purple.banner" cursor="pointer" boxSize={5}/>
-        <IconButton rounded={"full"} variant="ghost">
+        {/* <IconButton rounded={"full"} variant="ghost">
           <SearchIcon color="white.light" cursor="pointer" />
-        </IconButton>
+        </IconButton> */}
         {!(userLoggedInData) && <Link to="/login"><LandingButton text="Log in"/></Link>}
         {userLoggedInData && <LandingButton text="Log out" onClick={handleLogout}/>}
       </Flex>

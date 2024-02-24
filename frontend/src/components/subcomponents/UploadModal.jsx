@@ -14,15 +14,12 @@ import ModalInput from "../utils/ModalInput";
 import { useState } from "react";
 import axios from "axios";
 import useToaster from "../../hooks/useToaster";
-import { useRecoilState } from "recoil";
-import { userAtom } from "../../atoms/userAtom";
 
-const UploadModal = ({isOpen, onClose}) => {
+const UploadModal = ({isOpen, onClose, setGamesCollection}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const toast = useToaster();
-  const [userLoggedInData, setUserLoggedInData] = useRecoilState(userAtom);
 
   const handleUpload = async () => {
     try {
@@ -39,7 +36,7 @@ const UploadModal = ({isOpen, onClose}) => {
       });
       const result = await response.data;
       toast("Game uploaded successfully", result?.message, "success");
-      setUserLoggedInData({...userLoggedInData, games: result?.games});
+      setGamesCollection(prevGames => prevGames?.concat(result?.gameId));
       setTitle("");
       setDescription("");
       setPrice("");

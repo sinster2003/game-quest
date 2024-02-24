@@ -16,7 +16,7 @@ const ownersRouter = express.Router();
 // ownerAuth verifiers jwt of a owner
 ownersRouter.post("/signup", signupOwner);
 ownersRouter.post("/login", loginOwner);
-ownersRouter.post("/logout", ownerAuth, logoutOwner);
+ownersRouter.post("/logout", logoutOwner);
 ownersRouter.get("/dashboard", ownerAuth, getOwnerDashboard);
 ownersRouter.put("/update-profile", ownerAuth, updateProfile);
 ownersRouter.post("/register-marketplace", ownerAuth, registerMarketplace);

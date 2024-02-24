@@ -4,7 +4,7 @@ import LandingButton from './../components/utils/LandingButton';
 import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { userAtom, userSelector } from '../atoms/userAtom';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useToaster from '../hooks/useToaster';
 import BoughtGameCard from '../components/subcomponents/BoughtGameCard';
 
@@ -41,7 +41,7 @@ const CustomerDashboard = () => {
       <Flex flexDirection="column" mt={8} alignItems="center" gap={4}>
         <Text className="sub-heading" fontSize="2xl" textAlign="center" w="full">Games Purchased</Text>
         {!(userLoggedInDataLoadable.contents?.games?.length) && <Text>No games purchased yet 😔</Text>}
-        <LandingButton text="Shop now"/>
+        <Link to="/shop-now"><LandingButton text="Shop now"/></Link>
         <Flex my={10} flexDirection={{base: "column", md: "row"}} flexWrap="wrap" justifyContent="flex-start" w="full">
         {userLoggedInDataLoadable.contents?.games?.map((game) => {
           return <BoughtGameCard key={game._id} game={game}/>
