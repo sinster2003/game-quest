@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react'
 
-const LandingButton = ({type, text, w, my, onClick}) => {
+const LandingButton = ({type, text, w, my, onClick, isDisabled}) => {
   return (
     <Button
       bgGradient={"linear(to-r, purple.buttonLeft, purple.buttonRight)"}
@@ -12,6 +12,7 @@ const LandingButton = ({type, text, w, my, onClick}) => {
       type={type || "button"}
       my={my}
       onClick={onClick}
+      isDisabled={isDisabled}
     >
       {text}
     </Button>
