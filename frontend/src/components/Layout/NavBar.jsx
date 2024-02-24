@@ -56,9 +56,11 @@ const NavBar = () => {
         gap={20}
         fontSize={{ base: "sm", md: "md" }}
       >
-        <ListItem cursor="pointer" _hover={{ color: "purple.banner" }}>
-          Games
-        </ListItem>
+        <Link to="/shop-now">
+          <ListItem cursor="pointer" _hover={{ color: "purple.banner" }}>
+            Games
+          </ListItem>
+        </Link>
         <ListItem cursor="pointer" _hover={{ color: "purple.banner" }}>
           Trending
         </ListItem>

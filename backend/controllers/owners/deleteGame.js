@@ -1,5 +1,6 @@
 import Game from "../../models/games.js";
 import Shop from "../../models/shops.js";
+import {v2 as cloudinary} from "cloudinary";
 
 const deleteGame =  async (req, res) => {
     // game_id
@@ -15,6 +16,13 @@ const deleteGame =  async (req, res) => {
 
     if(!isExistingGameInShop) {
         return res.status(404).json({message: "Game Not found"});
+    }
+
+    const {image: gameImage} = await Game.findById(gameId).select("image");
+
+    if(gameImage && gameImage.includes("cloudinary")) {
+        const gameImageId = gameImage.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(gameImageId);
     }
 
     // delete from game collection

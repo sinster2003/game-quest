@@ -2,6 +2,7 @@ import Dashboardheader from '../components/utils/Dashboardheader';
 import { 
   Box, 
   Flex, 
+  Spinner, 
   useDisclosure 
 } from '@chakra-ui/react';
 import { Text } from '@chakra-ui/react';
@@ -24,6 +25,7 @@ const OwnerDashboard = () => {
   const toast = useToaster();
   const navigate = useNavigate();
   const {isOpen, onOpen, onClose} = useDisclosure();
+  const [isDeleting, setIsDeleting] = useState(false);
   
   useEffect(() => {
     // if logged out & trying to access the dashboard and not manually logs out
@@ -50,10 +52,12 @@ const OwnerDashboard = () => {
 
   const handleDelete = async (gameId) => {
     try {
+      setIsDeleting(true);
       const response = await axios.delete(`/api/v1/owners/delete-game/${gameId}`);
       const result = await response.data;
       toast("Game Deleted Successfully", result?.message, "success");
       setGamesCollection(gamesCollection?.filter(game_id => game_id !== gameId)); // frontend filtering 
+      setIsDeleting(false);
     }
     catch (error) {
       console.log(error);
@@ -67,6 +71,7 @@ const OwnerDashboard = () => {
   
   return (
     <Flex flexDirection="column" mx={300} mt={90}>
+      {isDeleting && <Spinner size="lg" position="fixed" top={5} right={5}/>}
       <Dashboardheader userLoggedInData={userLoggedInDataLoadable?.contents}/>
       <Box w="full" h={0.1} bg="purple.shadowLight"></Box>
       <Flex flexDirection="column" mt={8} alignItems="center" gap={4}>

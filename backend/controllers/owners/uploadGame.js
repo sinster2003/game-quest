@@ -1,13 +1,15 @@
 import Game from "../../models/games.js";
 import Shop from "../../models/shops.js";
 import gameObj from "../../zod/game.js";
+import {v2 as cloudinary} from "cloudinary";
 
 const uploadGame = async (req, res) => {
     // shop id from rgister middleware
     const shopId = req.shop;
 
     // game details
-    const {title, image, description, price } = req.body;
+    const {title, description, price } = req.body;
+    let {image} = req.body; 
 
     // validation for game
     gameObj.parse({
@@ -16,6 +18,13 @@ const uploadGame = async (req, res) => {
         description,
         price
     });
+
+    if(image) {
+        const cloudImage = await cloudinary.uploader.upload(image, {
+            timeout: 120000
+        });
+        image = cloudImage.secure_url;
+    }
 
     // game is saved
     const game = new Game({

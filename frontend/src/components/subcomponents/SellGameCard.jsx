@@ -26,11 +26,11 @@ const SellGameCard = ({game_id, handleDelete}) => {
 
   return (
     <Flex flexDirection="column" bg="purple.500" pb={4} mt={4} position="relative">
-        <Icon as={MdDelete} h={10} w={10} color="purple.bg" position="absolute" right={2} top={2} bg="whiteAlpha.800" p={2} borderRadius="50%" _hover={{bg: "whiteAlpha.600"}} cursor="pointer" onClick={handleDelete}/>
-        <Image src="/GTAV.png" alt={game?.title} h={300} w={300} objectFit="cover"/>
-        <Text fontSize="xl" pt={3} color="purple.900" textAlign="center" className="sub-heading">{game?.title}</Text>
-        <Text fontSize="md" color="purple.100" fontWeight={600} textAlign="center">{game?.description?.length > 25 ? `${game?.description}...`: game?.description}</Text>
-        <Text fontSize="md" color="purple.100" fontWeight={600} textAlign="center">$ {game?.price}</Text>
+      <Icon as={MdDelete} h={10} w={10} color="purple.bg" position="absolute" right={2} top={2} bg="whiteAlpha.800" p={2} borderRadius="50%" _hover={{bg: "whiteAlpha.600"}} cursor="pointer" onClick={handleDelete}/>
+      <Image src={game?.image} alt={game?.title} h={300} w={300} objectFit="cover" objectPosition="top"/>
+      <Text fontSize="xl" pt={3} color="purple.900" textAlign="center" className="sub-heading">{game?.title}</Text>
+      <Text fontSize="md" color="purple.100" fontWeight={600} textAlign="center">{game?.description?.length > 25 ? `${game?.description}...`: game?.description}</Text>
+      <Text fontSize="md" color="purple.100" fontWeight={600} textAlign="center">$ {game?.price}</Text>
     </Flex>
   )
 }
