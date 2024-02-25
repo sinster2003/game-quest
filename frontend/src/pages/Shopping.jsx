@@ -65,7 +65,7 @@ const Shopping = () => {
 
   return (
     <Flex flexDirection="column" mt={10} alignItems="center">
-      <Subheading text="Games" size="4xl"/>   
+      <Subheading text="Games" size="4xl" w="fit-content"/>   
       <Flex flexDirection="row" flexWrap="wrap" gap={10} justifyContent="center" mt={8}>
         {
           slicedArray?.map(game => {

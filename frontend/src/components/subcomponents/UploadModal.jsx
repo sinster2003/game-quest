@@ -78,7 +78,7 @@ const UploadModal = ({isOpen, onClose, setGamesCollection}) => {
           <ModalInput value={price} setValue={setPrice} placeholder="Enter the price of the game"/>
           <Input ref={inputElement} type="file" accept="image/*" hidden onChange={readImage}/>
           <LandingButton my={2} text="Add an image" onClick={() => inputElement.current.click()}/>
-          {image && <Image src={image} h={400} w={400} mt={5} alt="Uploaded Image"/>}
+          {image && <Image src={image} h={400} w={400} mt={5} alt="Uploaded Image" objectFit="cover" objectPosition="top"/>}
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="red" mr={3} onClick={handleClose} isDisabled={loading}>

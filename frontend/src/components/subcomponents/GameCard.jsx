@@ -4,22 +4,28 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import cartAtom from '../../atoms/cartAtom';
 import showCartAtom from '../../atoms/showCartAtom';
 import useToaster from '../../hooks/useToaster';
+import { Link } from 'react-router-dom';
 
 const GameCard = ({game}) => {
   const [cartItems, setCartItems] = useRecoilState(cartAtom);
   const setShowCart = useSetRecoilState(showCartAtom);
   const toast = useToaster();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e) => {
+    e.preventDefault();
     const isGameInCart = cartItems.find(cartItem => cartItem._id === game._id);
     if(!isGameInCart) {
       setCartItems(cartItems?.concat(game));
       localStorage.setItem("cart", JSON.stringify(cartItems?.concat(game)));
       toast("Successful Addition", `${game.title} added into the cart`, "success")
     }
+    else {
+      toast("Already in the cart", `${game.title} is present in the cart`, "error")
+    }
   }
 
   return (
+    <Link to={`/game-details/${game._id}`}>
     <Flex flexDirection="column" bg="purple.500" pb={4} mt={1} position="relative">
       <Image src={game?.image || "/GTAV.png"} alt={game?.title} h={300} w={300} objectFit="cover" objectPosition="top"/>
       <Flex flexDirection="column" justifyContent="center" alignItems="center" my={4}>
@@ -28,9 +34,13 @@ const GameCard = ({game}) => {
       </Flex>
       <Flex justifyContent="center" gap={4}>
         <Button bg="purple.200" color="purple.bg" _hover={{}} _focus={{}} _active={{}} onClick={handleAddToCart}>Add to Cart</Button>
-        <Button bg="purple.bg" color="white.light" _hover={{}} _focus={{}} _active={{}} onClick={() => setShowCart(true)}>Buy Now</Button>
+        <Button bg="purple.bg" color="white.light" _hover={{}} _focus={{}} _active={{}} onClick={(e) => {
+          e.preventDefault();
+          setShowCart(true);
+        }}>Buy Now</Button>
       </Flex>
     </Flex>
+    </Link>
   )
 }
 

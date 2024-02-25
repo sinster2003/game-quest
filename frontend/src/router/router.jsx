@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../App";
 import { BuyOrSell, CustomerDashboard, Landing, Login, OwnerDashboard, Signup } from "../pages";
 import Shopping from "../pages/Shopping";
+import GameDetails from "../pages/GameDetails";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path: "/shop-now",
                 element: <Shopping/>
+            }, 
+            {
+                path: "/game-details/:id",
+                element: <GameDetails/>
             }
         ]
     }
