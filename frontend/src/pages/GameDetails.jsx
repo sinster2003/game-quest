@@ -21,6 +21,8 @@ const GameDetails = () => {
   const navigate = useNavigate();
   const userLoggedInData = useRecoilValue(userAtom);
   const userLoggedInDataLoadable = useRecoilValueLoadable(userSelector);
+  const [rating, setRating] = useState(0);
+  const [ratingCount, setRatingCount] = useState(0);
   
   useEffect(() => {
     if(!userLoggedInData) { // not logged in
@@ -43,9 +45,21 @@ const GameDetails = () => {
         console.log(error)
       }
     }
-    if(userLoggedInData) {
-      getGame();
+    getGame();
+
+    // getting avg ratings
+    const getAvgRatings = async () => {
+      try {
+        const response = await axios.get(`/api/v1/customers/avg-game-rating/${id}`);
+        const result = await response.data;
+        setRating(result?.ratingAvg);
+        setRatingCount(result?.ratingCount);
+      }
+      catch(error) {
+        console.log(error);
+      }
     }
+    getAvgRatings();
   }, [id, userLoggedInData, userLoggedInDataLoadable]);
 
   const handleAddToCart = (e, buy) => {
@@ -79,8 +93,8 @@ const GameDetails = () => {
           <Flex flexDirection="column" w="50%">
               <Subheading size={60} text={game?.title} w="fit-content"/>
               <Flex gap={4} alignItems="center">
-                <Star rating={4.1444892} gameId={game?._id}/>
-                <Text>(130  ratings)</Text>
+                <Star rating={rating ? rating : 0} gameId={game?._id}/>
+                <Text>({ratingCount ? ratingCount : 0} ratings)</Text>
               </Flex>
               <Text fontSize="4xl" fontWeight={800} color="purple.shadowLight" my={4}>${game?.price}</Text>
               <Flex gap={3}>

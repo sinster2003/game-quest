@@ -42,7 +42,7 @@ const CustomerDashboard = () => {
         <Text className="sub-heading" fontSize="2xl" textAlign="center" w="full">Games Purchased</Text>
         {!(userLoggedInDataLoadable.contents?.games?.length) && <Text>No games purchased yet 😔</Text>}
         <Link to="/shop-now"><LandingButton text="Shop now"/></Link>
-        <Flex my={10} flexDirection={{base: "column", md: "row"}} flexWrap="wrap" justifyContent="flex-start" w="full">
+        <Flex flexWrap="wrap" my={10} gap={10} justifyContent="center">
         {userLoggedInDataLoadable.contents?.games?.map((game) => {
           return <BoughtGameCard key={game._id} game={game}/>
         })}

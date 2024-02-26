@@ -7,6 +7,9 @@ import useToaster from "../../hooks/useToaster";
 const Star = ({ rating, gameId }) => {
   const [roundRating, setRoundRating] = useState(Math.round(rating));
   const toast = useToaster();
+  if(isNaN(roundRating) || roundRating === undefined || roundRating === null) {
+    setRoundRating(0);
+  }
 
   // memoize the roundRating
   const roundRatingArray = useMemo(() => {
@@ -29,7 +32,7 @@ const Star = ({ rating, gameId }) => {
   const handleRating = async (newRating) => {
     try{
         const response = await axios.post(`/api/v1/customers/rating-game/${gameId}`, {
-            rating: newRating
+          rating: newRating
         });
         const result = await response.data; 
         toast("Rated Successfully", `You rated this game ${newRating} stars`, "success");
@@ -41,8 +44,9 @@ const Star = ({ rating, gameId }) => {
   }
 
   return (
-    <Flex gap={1} w={110}>
+    <Flex w={110}>
       <Flex gap={1}>
+        {/* yellow stars */}
         {roundRatingArray?.map((round) => {
           return (
             <FaStar
@@ -55,8 +59,7 @@ const Star = ({ rating, gameId }) => {
             />
           );
         })}
-      </Flex>
-      <Flex gap={1}>
+        {/* white stars */}
         {remainingRatingArray?.map((remain) => {
           return (
             <FaStar
