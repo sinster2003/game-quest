@@ -11,16 +11,21 @@ const GameCard = ({game}) => {
   const setShowCart = useSetRecoilState(showCartAtom);
   const toast = useToaster();
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = (e, buy) => {
     e.preventDefault();
     const isGameInCart = cartItems.find(cartItem => cartItem._id === game._id);
     if(!isGameInCart) {
       setCartItems(cartItems?.concat(game));
       localStorage.setItem("cart", JSON.stringify(cartItems?.concat(game)));
       toast("Successful Addition", `${game.title} added into the cart`, "success")
+      if(buy) { // if buy now is clicked
+        setShowCart(true);
+      }
     }
     else {
-      toast("Already in the cart", `${game.title} is present in the cart`, "error")
+      if(!buy) {
+        toast("Already in the cart", `${game.title} is present in the cart`, "error");
+      }
     }
   }
 
@@ -35,7 +40,7 @@ const GameCard = ({game}) => {
       <Flex justifyContent="center" gap={4}>
         <Button bg="purple.200" color="purple.bg" _hover={{}} _focus={{}} _active={{}} onClick={handleAddToCart}>Add to Cart</Button>
         <Button bg="purple.bg" color="white.light" _hover={{}} _focus={{}} _active={{}} onClick={(e) => {
-          e.preventDefault();
+          handleAddToCart(e, true);
           setShowCart(true);
         }}>Buy Now</Button>
       </Flex>

@@ -1,27 +1,72 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Subheading from '../components/utils/Subheading';
 import ReviewCard from '../components/subcomponents/ReviewCard';
 import LandingButton from '../components/utils/LandingButton';
 import Star from '../components/subcomponents/Star';
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import showCartAtom from '../atoms/showCartAtom';
+import cartAtom from '../atoms/cartAtom';
+import useToaster from '../hooks/useToaster';
+import { userAtom, userSelector } from '../atoms/userAtom';
 
 const GameDetails = () => {
   const {id} = useParams();
   const [game, setGame] = useState(null);
+  const [cartItems, setCartItems] = useRecoilState(cartAtom);
+  const setShowCart = useSetRecoilState(showCartAtom);
+  const toast = useToaster();
+  const navigate = useNavigate();
+  const userLoggedInData = useRecoilValue(userAtom);
+  const userLoggedInDataLoadable = useRecoilValueLoadable(userSelector);
   
   useEffect(() => {
+    if(!userLoggedInData) { // not logged in
+      navigate("/login");
+      toast("Login", "Please login to shop the games", "error");
+    }
+    else if(userLoggedInDataLoadable?.contents?.isOwner && !JSON.parse(localStorage.getItem("logged-out"))) { // is a owner
+      navigate("/owner-dashboard");
+      toast("Denied Access", "Please login as a customer", "error");
+    }
+
     // game to be fetched
     const getGame = async () => {
+      try{
         const response = await axios.get(`/api/v1/customers/get-game-details/${id}`);
         const result = await response.data;
         setGame(result);
+      }
+      catch(error) {
+        console.log(error)
+      }
     }
-    getGame();
-  }, [id]);
+    if(userLoggedInData) {
+      getGame();
+    }
+  }, [id, userLoggedInData, userLoggedInDataLoadable]);
 
-  if(!game) {
+  const handleAddToCart = (e, buy) => {
+    e.preventDefault();
+    const isGameInCart = cartItems.find(cartItem => cartItem._id === game._id);
+    if(!isGameInCart) {
+      setCartItems(cartItems?.concat(game));
+      localStorage.setItem("cart", JSON.stringify(cartItems?.concat(game)));
+      toast("Successful Addition", `${game.title} added into the cart`, "success")
+      if(buy) { // if buy now is clicked
+        setShowCart(true);
+      }
+    }
+    else {
+      if(!buy) {
+        toast("Already in the cart", `${game.title} is present in the cart`, "error");
+      }
+    }
+  }
+
+  if(userLoggedInDataLoadable?.state === "loading" || !game) {
     return <p>Loading...</p>
   }
 
@@ -34,14 +79,17 @@ const GameDetails = () => {
           <Flex flexDirection="column" w="50%">
               <Subheading size={60} text={game?.title} w="fit-content"/>
               <Flex gap={4} alignItems="center">
-                <Flex gap={1}>
-                    <Box>
-                        <Star rating={4.1444892}/>
-                    </Box>
-                </Flex>  
+                <Star rating={4.1444892} gameId={game?._id}/>
                 <Text>(130  ratings)</Text>
               </Flex>
               <Text fontSize="4xl" fontWeight={800} color="purple.shadowLight" my={4}>${game?.price}</Text>
+              <Flex gap={3}>
+                <Button bg="purple.200" w={150} color="purple.bg" _hover={{bg: "purple.100"}} _focus={{}} _active={{}} onClick={handleAddToCart}>Add to Cart</Button>
+                <Button bg="purple.700" w={150} color="white.light" _hover={{bg: "purple.800"}} _focus={{}} _active={{}} onClick={(e) => {
+                  handleAddToCart(e, true);
+                  setShowCart(true);
+                }}>Buy Now</Button>
+              </Flex>
               <Text fontSize="2xl" my={4} color="whiteAlpha.600" fontWeight={500}>Details</Text>
               <Text fontSize="lg">{game?.description}</Text>
           </Flex>

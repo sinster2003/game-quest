@@ -57,7 +57,7 @@ const Signup = () => {
 
   return (
     <Flex flexDirection="column" alignItems="center" mt={8}>
-      <Subheading text="Join the community" size="4xl" />
+      <Subheading text="Join the community" size="4xl" w="fit-content"/>
       <Subtext
         text="Be part of a adventurous gaming universe in our easy-to-use platform"
         margin={2}

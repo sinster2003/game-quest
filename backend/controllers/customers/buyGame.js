@@ -10,11 +10,6 @@ const buyGame = async (req, res) => {
     // game_id, shop_id, amount from req.body
     const { gameId, shopId } = req.body;
 
-    // payment process (razorpay / stripe)
-
-    // if payment fails
-    // throw error
-
     // validating gameId 
     const isGame = await Game.findById(gameId);
 

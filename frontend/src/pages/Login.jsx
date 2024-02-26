@@ -1,7 +1,7 @@
 import { Flex, Input, Select, Text } from "@chakra-ui/react";
 import Subheading from "./../components/utils/Subheading";
 import Subtext from "../components/utils/Subtext";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../components/utils/FormInput";
 import LandingButton from "../components/utils/LandingButton";
 import useFormSchema from "../hooks/useFormSchema";
@@ -13,10 +13,9 @@ import { useRecoilState } from "recoil";
 import { userAtom } from "../atoms/userAtom";
 
 const Login = () => {
-  const [searchParams] = useSearchParams();
   const { register, errors, handleSubmit } = useFormSchema(login, {
     // default value for isOwner selectElement
-    isOwner: searchParams.get("role") || "customer"
+    isOwner: "customer"
   });
 
   const toast = useToaster();
@@ -53,7 +52,7 @@ const Login = () => {
 
   return (
     <Flex flexDirection="column" alignItems="center" mt={10}>
-      <Subheading text="Welcome Back" size="4xl" />
+      <Subheading text="Welcome Back" size="4xl" w="fit-content"/>
       <Subtext
         text="Delve into the adventurous gaming universe in our easy-to-use platform"
         margin={2}

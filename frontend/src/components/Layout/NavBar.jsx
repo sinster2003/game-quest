@@ -17,7 +17,7 @@ import {
 import { FiShoppingCart } from "react-icons/fi";
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { userAtom, userSelector } from "../../atoms/userAtom";
 import LandingButton from "../utils/LandingButton";
 import axios from "axios";
@@ -33,6 +33,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const cartItems = useRecoilValue(cartAtom);
   const [showCart, setShowCart] = useRecoilState(showCartAtom);
+  const setCart = useSetRecoilState(cartAtom);
 
   // memoizing the total price
   const handlePrice = useMemo(() => {
@@ -45,21 +46,34 @@ const NavBar = () => {
 
   const handleLogout = async () => {
     try{
-      const role = userLoggedInDataLoadable.isOwner ? "owners": "customers";
+      const role = userLoggedInDataLoadable?.contents?.isOwner ? "owners": "customers";
       const response = await axios.post(`/api/v1/${role}/logout`);
       const result = await response.data;
       toast("Successful Logout", `${result?.message}`, "success");
       localStorage.removeItem("user");
+      localStorage.removeItem("cart");
       localStorage.setItem("logged-out", JSON.stringify(true));
+      setCart([]); // empty cart items
+      setShowCart(false);
       setUserLoggedInData(null);
       navigate("/");
     }
     catch(error) {
-      toast("Unsuccessful Logout", `${result?.message}`, "error");
+      toast("Unsuccessful Logout", `${error?.response?.data?.message}`, "error");
     }
   }
 
-  if(userLoggedInDataLoadable.state === "loading") {
+  const handleCheckout = async () => {
+    const response = await axios.post("/api/v1/customers/checkout-session", {
+      cartItems
+    });
+    const {sessionUrl} = await response.data;
+    if(sessionUrl) {
+      window.location.href = sessionUrl;
+    }
+  }
+
+  if(userLoggedInDataLoadable?.state === "loading") {
     return <p>Loading...</p>
   }
 
@@ -97,7 +111,7 @@ const NavBar = () => {
       </UnorderedList>
       <Flex alignItems="center" justifyContent="flex-end" gap={8} w={250}>
         <Link to={userLoggedInDataLoadable?.contents?.isOwner ? `/owner-dashboard` : `/customer-dashboard`}>
-          <Avatar src={userLoggedInData?.profilePic} size="sm"/>
+          <Avatar src={userLoggedInDataLoadable?.contents?.profilePic} size="sm"/>
         </Link>
         <Flex alignItems="center" position="relative">
           <Flex bg="purple.500" color="white.light" p={2.5} borderRadius="50%" w={2} h={2} justifyContent="center" alignItems="center" position="absolute" top={-3} left={3}>
@@ -140,7 +154,7 @@ const NavBar = () => {
               <Text fontSize="lg" color="whiteAlpha.700">Total: </Text>
               <Text fontSize="lg" fontWeight="bold" color="purple.shadowLight">${handlePrice}</Text>
             </Flex>
-            <LandingButton text="Checkout" isDisabled={cartItems?.length === 0 && true}/>
+            <LandingButton text="Checkout" isDisabled={cartItems?.length === 0 && true} onClick={handleCheckout}/>
           </ModalFooter>
         </ModalContent>
       </Modal>

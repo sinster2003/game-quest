@@ -3,6 +3,7 @@ import App from "../App";
 import { BuyOrSell, CustomerDashboard, Landing, Login, OwnerDashboard, Signup } from "../pages";
 import Shopping from "../pages/Shopping";
 import GameDetails from "../pages/GameDetails";
+import Success from "../pages/Success";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: "/game-details/:id",
                 element: <GameDetails/>
+            },
+            {
+                path: "/success/:id",
+                element: <Success/>
             }
         ]
     }
