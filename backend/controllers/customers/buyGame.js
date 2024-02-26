@@ -8,7 +8,13 @@ const buyGame = async (req, res) => {
     const customerId = req.customer;
 
     // game_id, shop_id, amount from req.body
-    const { gameId, shopId } = req.body;
+    const { gameId } = req.body;
+
+    console.log(gameId);
+
+    const {selling_shop: shopId} = await Game.findById(gameId).select("selling_shop");
+
+    console.log(shopId);
 
     // validating gameId 
     const isGame = await Game.findById(gameId);
@@ -47,7 +53,7 @@ const buyGame = async (req, res) => {
     });
 
     // respond
-    res.status(200).json({message: "Game Bought successfully"});
+    res.status(200).json({message: `${isGame.title} Bought successfully`});
 }
 
 export default buyGame;

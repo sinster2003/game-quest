@@ -18,7 +18,7 @@ const getSession = async (req, res) => {
         currency: "usd",
         unit_amount: cartItem.price * 100,
         product_data: {
-          name: cartItem.title,
+          name: `${cartItem.title}###${cartItem._id}`,
           description: cartItem.description,
           images: [cartItem.image]
         }
