@@ -13,6 +13,7 @@ import getGameDetails from "../controllers/customers/getGameDetails.js";
 import getSession from "../controllers/customers/getSession.js";
 import validateSession from "../controllers/customers/validateSession.js";
 import getAvgRating from "../controllers/customers/getAvgRating.js";
+import getReviewer from "../controllers/customers/getReviewer.js";
 
 const customersRouter = express.Router();
 
@@ -29,5 +30,6 @@ customersRouter.post("/review-game/:id", customerAuth, boughtGameAuth, reviewGam
 customersRouter.get("/get-game-details/:id", customerAuth, getGameDetails);
 customersRouter.post("/checkout-session", customerAuth, getSession);
 customersRouter.get("/order-success/:id", customerAuth, validateSession);
+customersRouter.get("/get-reviewer-info/:id", customerAuth, getReviewer);
 
 export default customersRouter;

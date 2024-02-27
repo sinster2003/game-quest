@@ -1,48 +1,75 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import axios from "axios";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import useToaster from "../../hooks/useToaster";
+import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import ratingCountAtom from "../../atoms/ratingCountAtom";
 
-const Star = ({ rating, gameId }) => {
-  const [roundRating, setRoundRating] = useState(Math.round(rating));
+const Star = ({ gameId}) => {
+  const {id} = useParams();
+  const [rating, setRating] = useState(0);
+  const [ratingCount, setRatingCount] = useRecoilState(ratingCountAtom);
   const toast = useToaster();
-  if(isNaN(roundRating) || roundRating === undefined || roundRating === null) {
-    setRoundRating(0);
-  }
+  const [isHovering, setIsHovering] = useState(false);
+  const [hoveredValue, setHoveredValue] = useState(0);
+
+  useEffect(() => {
+    // getting avg ratings
+    const getAvgRatings = async () => {
+      try {
+        const response = await axios.get(`/api/v1/customers/avg-game-rating/${id}`);
+        const result = await response.data;
+        setRating(result?.find(res => res._id === id).ratingAvg || 0);
+        setRatingCount(result?.find(res => res._id === id).ratingCount || 0);
+      }
+      catch(error) {
+        console.log(error);
+      }
+    }
+    getAvgRatings();
+  }, [id]);
 
   // memoize the roundRating
   const roundRatingArray = useMemo(() => {
     const round = [];
-    for (let i = 1; i <= roundRating; i++) {
+    const value = isHovering ? hoveredValue : Math.round(rating);
+    for (let i = 1; i <= value; i++) {
       round.push(i);
     }
     return round;
-  }, [rating, roundRating]);
+  }, [rating, hoveredValue]);
 
   // memoize the remainingRating
   const remainingRatingArray = useMemo(() => {
     const remain = [];
-    for (let i = roundRating + 1; i <= 5; i++) {
+    const value = isHovering ? hoveredValue : Math.round(rating);
+    console.log("Valu", value);
+    for (let i = value + 1; i <= 5; i++) {
       remain.push(i);
     }
     return remain;
-  }, [rating, roundRating]);
-
+  }, [rating, hoveredValue]);
+  
   const handleRating = async (newRating) => {
     try{
-        const response = await axios.post(`/api/v1/customers/rating-game/${gameId}`, {
-          rating: newRating
-        });
-        const result = await response.data; 
-        toast("Rated Successfully", `You rated this game ${newRating} stars`, "success");
+      const response = await axios.post(`/api/v1/customers/rating-game/${gameId}`, {
+        rating: newRating
+      });
+      const result = await response.data; 
+      toast("Rated Successfully", result?.message, "success");
+      setRating((rating + newRating) / (ratingCount + 1));
+      setRatingCount(ratingCount + 1);
+      setIsHovering(false);
+      setHoveredValue(0);
     }
     catch(error) {
-        console.log(error);
+      console.log(error);
         toast("Rating unsuccessful", `${error?.response?.data?.message}`, "error");
     }
   }
-
+  
   return (
     <Flex w={110}>
       <Flex gap={1}>
@@ -53,9 +80,16 @@ const Star = ({ rating, gameId }) => {
               key={round}
               size={20}
               fill="yellow"
-              onMouseOver={() => setRoundRating(round)}
-              onMouseLeave={() => setRoundRating(Math.round(rating))}
+              onMouseOver={() => {
+                setIsHovering(true);
+                setHoveredValue(round);
+              }}
+              onMouseLeave={() => {
+                setIsHovering(false);
+                setHoveredValue(0);
+              }}
               onClick={() => handleRating(round)}
+              cursor="pointer"
             />
           );
         })}
@@ -66,9 +100,16 @@ const Star = ({ rating, gameId }) => {
               key={remain}
               size={20}
               fill="white"
-              onMouseOver={() => setRoundRating(remain)}
-              onMouseLeave={() => setRoundRating(Math.round(rating))}
+              onMouseOver={() => {
+                setIsHovering(true);
+                setHoveredValue(remain);
+              }}
+              onMouseLeave={() => {
+                setIsHovering(false);
+                setHoveredValue(0);
+              }}
               onClick={() => handleRating(remain)}
+              cursor="pointer"
             />
           );
         })}

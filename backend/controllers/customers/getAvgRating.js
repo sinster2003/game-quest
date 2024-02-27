@@ -19,7 +19,7 @@ const getAvgRating = async (req, res) => {
   ]).exec();
 
   // average rating for the specified game
-  res.status(200).json(rating.find(rating => rating._id.toString() === id));
+  res.status(200).json(rating);
 }
 
 export default getAvgRating

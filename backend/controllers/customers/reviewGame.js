@@ -44,6 +44,7 @@ const reviewGame = async (req, res) => {
     })
 
     // respond
+    res.status(200).json({message: "Review added successful", review: reviewDocument})
 }
 
 export default reviewGame;

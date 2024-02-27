@@ -62,6 +62,7 @@ const OwnerDashboard = () => {
     catch (error) {
       console.log(error);
       toast("Error occurred", error?.response?.data?.message || "Something went wrong", "error");
+      setIsDeleting(false);
     }
   }
 
