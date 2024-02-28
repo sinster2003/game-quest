@@ -89,11 +89,13 @@ const Signup = () => {
             placeholder={"Enter Password"}
             register={register}
             label={"password"}
+            type="password"
           />
           <FormInput
             placeholder={"Confirm Password"}
             register={register}
             label={"confirmPassword"}
+            type="password"
           />
           <LandingButton type="submit" text="Sign Up" w={"full"} />
         </Flex>

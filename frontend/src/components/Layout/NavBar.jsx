@@ -111,14 +111,14 @@ const NavBar = () => {
       </UnorderedList>
       <Flex alignItems="center" justifyContent="flex-end" gap={8} w={250}>
         <Link to={userLoggedInDataLoadable?.contents?.isOwner ? `/owner-dashboard` : `/customer-dashboard`}>
-          <Avatar src={userLoggedInDataLoadable?.contents?.profilePic} size="sm"/>
+          <Avatar src={userLoggedInDataLoadable?.contents?.profilePic} size="sm" name={userLoggedInDataLoadable?.contents?.name}/>
         </Link>
-        <Flex alignItems="center" position="relative">
+        {(!userLoggedInDataLoadable?.contents?.isOwner) && <Flex alignItems="center" position="relative">
           <Flex bg="purple.500" color="white.light" p={2.5} borderRadius="50%" w={2} h={2} justifyContent="center" alignItems="center" position="absolute" top={-3} left={3}>
             <Text fontSize="xs" fontWeight="bold">{cartItems?.length || 0}</Text>
           </Flex>
           <Icon as={FiShoppingCart} color="purple.banner" cursor="pointer" boxSize={5} onClick={() => setShowCart(true)}/>
-        </Flex>
+        </Flex>}
         {!(userLoggedInData) && <Link to="/login"><LandingButton text="Log in"/></Link>}
         {userLoggedInData && <LandingButton text="Log out" onClick={handleLogout}/>}
       </Flex>

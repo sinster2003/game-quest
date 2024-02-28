@@ -75,6 +75,7 @@ const Login = () => {
             placeholder={"Enter Password"}
             register={register}
             label={"password"}
+            type="password"
           />
           <Select
             variant="filled"
