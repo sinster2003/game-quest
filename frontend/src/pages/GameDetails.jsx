@@ -137,7 +137,7 @@ const GameDetails = () => {
         {
           reviews?.length > 0 ?
           reviews?.map(review => {
-            return <ReviewCard review={review}/>
+            return <ReviewCard key={review._id} review={review}/>
           }):
           <Text fontSize="lg" my={2}>No Reviews Yet😔 Be the first one to review</Text>
         }

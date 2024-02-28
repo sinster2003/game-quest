@@ -1,6 +1,7 @@
 import Owner from "../../models/owners.js";
 import Shop from "../../models/shops.js";
 import register from "../../zod/register.js";
+import {v2 as cloudinary} from "cloudinary";
 
 const registerMarketplace = async (req, res) => {
     // owner id
@@ -14,7 +15,8 @@ const registerMarketplace = async (req, res) => {
     }
 
     // details of the marketplace
-    const {name, location, logo} = req.body;
+    const {name, location} = req.body;
+    let {logo} = req.body;
 
     // input validations
     register.parse({
@@ -25,9 +27,15 @@ const registerMarketplace = async (req, res) => {
 
     // if shop exists throw an error
     const isExistingShop = await Shop.findOne({name});
-
+    
     if(isExistingShop) {
         return res.status(400).json({message: "Shop already exists"});
+    }
+    
+    // no logo deletion
+    if(logo) {
+        const result = await cloudinary.uploader.upload(logo);
+        logo = result.secure_url;
     }
 
     // register the shop or marketplace

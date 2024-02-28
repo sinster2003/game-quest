@@ -7,12 +7,12 @@ const ReviewCard = ({review}) => {
 
   useEffect(() => {
     const getConstumerWhoReviewed = async () => {
-      const response = await axios.get(`/api/v1/customers/${review?.customer_id}`);
+      const response = await axios.get(`/api/v1/customers/get-reviewer-info/${review?.customer_id}`);
       const result = await response.data;
-      setPic(result);
+      setPic(result?.profilePic);
     }
     getConstumerWhoReviewed();
-  }, [review]);
+  }, []);
 
   return (
     <Box px={4}>
