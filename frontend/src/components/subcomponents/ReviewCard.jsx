@@ -12,7 +12,7 @@ const ReviewCard = ({review}) => {
       setPic(result?.profilePic);
     }
     getConstumerWhoReviewed();
-  }, []);
+  }, [review]);
 
   return (
     <Box px={4}>

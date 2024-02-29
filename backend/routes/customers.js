@@ -25,7 +25,7 @@ customersRouter.get("/dashboard", customerAuth, getCustomerDashboard);
 customersRouter.put("/update-profile", customerAuth, updateProfile);
 customersRouter.post("/buy-game", customerAuth, buyGame);
 customersRouter.post("/rating-game/:id", customerAuth, boughtGameAuth, rateGame);
-customersRouter.get("/avg-game-rating/:id", customerAuth, getAvgRating);
+customersRouter.get("/avg-game-rating", customerAuth, getAvgRating);
 customersRouter.post("/review-game/:id", customerAuth, boughtGameAuth, reviewGame);
 customersRouter.get("/get-game-details/:id", customerAuth, getGameDetails);
 customersRouter.post("/checkout-session", customerAuth, getSession);

@@ -6,15 +6,15 @@ const getAvgRating = async (req, res) => {
   // aggregate pipeline for avg
   const rating = await Rating.aggregate([
     {
-        $group: {
-            _id: "$game_id", 
-            ratingAvg: {
-                $avg: "$rating"
-            },
-            ratingCount: {
-                $count: {}
-            }
+      $group: {
+        _id: "$game_id", 
+        ratingAvg: {
+          $avg: "$rating"
+        },
+        ratingCount: {
+          $count: {}
         }
+      }
     }
   ]).exec();
 

@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import ratingCountAtom from "../../atoms/ratingCountAtom";
 
-const Star = ({ gameId}) => {
+const Star = ({ gameId }) => {
   const {id} = useParams();
   const [rating, setRating] = useState(0);
   const [ratingCount, setRatingCount] = useRecoilState(ratingCountAtom);
@@ -19,7 +19,7 @@ const Star = ({ gameId}) => {
     // getting avg ratings
     const getAvgRatings = async () => {
       try {
-        const response = await axios.get(`/api/v1/customers/avg-game-rating/${id}`);
+        const response = await axios.get(`/api/v1/customers/avg-game-rating`);
         const result = await response.data;
         setRating(result?.find(res => res._id === id).ratingAvg || 0);
         setRatingCount(result?.find(res => res._id === id).ratingCount || 0);
@@ -45,7 +45,6 @@ const Star = ({ gameId}) => {
   const remainingRatingArray = useMemo(() => {
     const remain = [];
     const value = isHovering ? hoveredValue : Math.round(rating);
-    console.log("Valu", value);
     for (let i = value + 1; i <= 5; i++) {
       remain.push(i);
     }

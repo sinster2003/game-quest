@@ -102,12 +102,16 @@ const NavBar = () => {
             Games
           </ListItem>
         </Link>
+        <Link to="/shop-now?filter=trending">
         <ListItem cursor="pointer" _hover={{ color: "purple.banner" }}>
           Trending
         </ListItem>
+        </Link>
+        <Link to="/shop-now?filter=popular">
         <ListItem cursor="pointer" _hover={{ color: "purple.banner" }}>
           Popular
         </ListItem>
+        </Link>
       </UnorderedList>
       <Flex alignItems="center" justifyContent="flex-end" gap={8} w={250}>
         <Link to={userLoggedInDataLoadable?.contents?.isOwner ? `/owner-dashboard` : `/customer-dashboard`}>
