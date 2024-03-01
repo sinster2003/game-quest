@@ -96,7 +96,9 @@ const Shopping = () => {
       <Flex flexDirection="row" flexWrap="wrap" gap={10} justifyContent="center" mt={8}>
         {
           slicedArray?.map(game => {
-            return <GameCard key={game._id} game={game}/>
+            if(game?._id) {
+              return <GameCard key={game?._id} game={game}/>
+            }
           })
         }
       </Flex>
