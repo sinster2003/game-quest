@@ -123,7 +123,7 @@ const NavBar = () => {
         </ListItem>
         </Link>
       </UnorderedList>}
-      {!isMobile && <Flex alignItems="center" justifyContent="flex-end" gap={8} w={250}>
+      {!isMobileOrTab && <Flex alignItems="center" justifyContent="flex-end" gap={8} w={250}>
         <Link to={userLoggedInDataLoadable?.contents?.isOwner ? `/owner-dashboard` : `/customer-dashboard`}>
           <Avatar src={userLoggedInDataLoadable?.contents?.profilePic} size="sm" name={userLoggedInDataLoadable?.contents?.name}/>
         </Link>

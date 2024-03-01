@@ -16,6 +16,7 @@ const FormInput = ({placeholder, register, label, type}) => {
       focusBorderColor="purple.shadowLight"
       {...register(label)}
       type={show ? "text": "password"}
+      autoComplete='off'
     />
     {type && <InputRightElement>
       <Button variant={"ghost"} color="grey.text" _hover={{bg:"rgba(255,255,255,0.2)"}} onClick={() => setShow(!show)}>
