@@ -12,7 +12,14 @@ import {
   ModalBody,
   ModalHeader,
   ModalCloseButton,
-  ModalFooter
+  ModalFooter,
+  useMediaQuery,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
+  IconButton
 } from "@chakra-ui/react";
 import { FiShoppingCart } from "react-icons/fi";
 import { useMemo, useState } from "react";
@@ -25,6 +32,7 @@ import useToaster from "../../hooks/useToaster";
 import cartAtom from "../../atoms/cartAtom";
 import CartCard from "../subcomponents/CartCard";
 import showCartAtom from "../../atoms/showCartAtom";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 const NavBar = () => {
   const [userLoggedInData, setUserLoggedInData] = useRecoilState(userAtom);
@@ -34,6 +42,8 @@ const NavBar = () => {
   const cartItems = useRecoilValue(cartAtom);
   const [showCart, setShowCart] = useRecoilState(showCartAtom);
   const setCart = useSetRecoilState(cartAtom);
+  const [isMobile] = useMediaQuery('(max-width: 500px)');
+  const [isMobileOrTab] = useMediaQuery('(max-width: 900px)');
 
   // memoizing the total price
   const handlePrice = useMemo(() => {
@@ -78,19 +88,19 @@ const NavBar = () => {
   }
 
   return (
-    <Flex mt={4} alignItems="center" justifyContent="space-between">
+    <Flex mt={4} alignItems="center" justifyContent={isMobile? "space-around" : "space-between"}>
       <Link to="/">
       <Heading
         color="purple.light"
         className="heading"
-        fontSize="6xl"
+        fontSize={isMobileOrTab ? "5xl" : "6xl"}
         textAlign={{ base: "center", sm: "left" }}
-        w={250}
+        w={isMobileOrTab ? "fit-content" : 250}
       >
         Game<span style={{ color: "#dde3fd" }}>Quest</span>
       </Heading>
       </Link>
-      <UnorderedList
+      {!isMobileOrTab && <UnorderedList
         m={0}
         listStyleType="none"
         display="flex"
@@ -112,8 +122,8 @@ const NavBar = () => {
           Popular
         </ListItem>
         </Link>
-      </UnorderedList>
-      <Flex alignItems="center" justifyContent="flex-end" gap={8} w={250}>
+      </UnorderedList>}
+      {!isMobile && <Flex alignItems="center" justifyContent="flex-end" gap={8} w={250}>
         <Link to={userLoggedInDataLoadable?.contents?.isOwner ? `/owner-dashboard` : `/customer-dashboard`}>
           <Avatar src={userLoggedInDataLoadable?.contents?.profilePic} size="sm" name={userLoggedInDataLoadable?.contents?.name}/>
         </Link>
@@ -125,7 +135,30 @@ const NavBar = () => {
         </Flex>}
         {!(userLoggedInData) && <Link to="/login"><LandingButton text="Log in"/></Link>}
         {userLoggedInData && <LandingButton text="Log out" onClick={handleLogout}/>}
-      </Flex>
+      </Flex>}
+
+      {/* only for mobile or tab devices */}
+      {isMobileOrTab && <Flex alignItems="center" gap={5}>
+      <Link to={userLoggedInDataLoadable?.contents?.isOwner ? `/owner-dashboard` : `/customer-dashboard`}>
+        <Avatar src={userLoggedInDataLoadable?.contents?.profilePic} size="sm" name={userLoggedInDataLoadable?.contents?.name}/>
+      </Link>
+      <Menu>
+        <MenuButton
+          as={IconButton}
+          icon={<HamburgerIcon />}
+          color="purple.shadowLight"
+          variant='outline'
+          borderColor="purple.shadowLight"
+        />
+        <MenuList>
+          <MenuItem onClick={() => setShowCart(true)}>Cart</MenuItem>
+          <MenuItem><Link to="/shop-now">Games</Link></MenuItem>
+          <MenuItem><Link to="/shop-now?filter=trending">Trending</Link></MenuItem>
+          <MenuItem><Link to="/shop-now?filter=popular">Popular</Link></MenuItem>
+          <MenuItem onClick={handleLogout}>Log out</MenuItem>
+        </MenuList>
+      </Menu>
+      </Flex>}
       
       {/* cart */}
       <Modal isOpen={showCart} scrollBehavior="inside">

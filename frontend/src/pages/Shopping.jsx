@@ -92,7 +92,7 @@ const Shopping = () => {
 
   return (
     <Flex flexDirection="column" mt={10} alignItems="center">
-      <Subheading text="Games" size="4xl" w="fit-content"/>   
+      <Subheading text={getFilter.get("filter") ? `${getFilter.get("filter")[0].toLocaleUpperCase().concat(getFilter.get("filter").slice(1,))} Games` : "Games"} size="4xl" w="fit-content"/>   
       <Flex flexDirection="row" flexWrap="wrap" gap={10} justifyContent="center" mt={8}>
         {
           slicedArray?.map(game => {

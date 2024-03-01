@@ -3,7 +3,8 @@ import {
   Box, 
   Flex, 
   Spinner, 
-  useDisclosure 
+  useDisclosure, 
+  useMediaQuery
 } from '@chakra-ui/react';
 import { Text } from '@chakra-ui/react';
 import LandingButton from './../components/utils/LandingButton';
@@ -26,6 +27,7 @@ const OwnerDashboard = () => {
   const navigate = useNavigate();
   const {isOpen, onOpen, onClose} = useDisclosure();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMobileOrTab] = useMediaQuery("(max-width: 900px)")
   
   useEffect(() => {
     // if logged out & trying to access the dashboard and not manually logs out
@@ -71,7 +73,7 @@ const OwnerDashboard = () => {
   }
   
   return (
-    <Flex flexDirection="column" mx={300} mt={90}>
+    <Flex flexDirection="column" mx={!isMobileOrTab && 300} mt={isMobileOrTab ? 65 : 90}>
       {isDeleting && <Spinner size="lg" position="fixed" top={5} right={5}/>}
       <Dashboardheader userLoggedInData={userLoggedInDataLoadable?.contents}/>
       <Box w="full" h={0.1} bg="purple.shadowLight"></Box>

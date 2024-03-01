@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Text, useMediaQuery } from '@chakra-ui/react'
 import Dashboardheader from './../components/utils/Dashboardheader';
 import LandingButton from './../components/utils/LandingButton';
 import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
@@ -14,6 +14,7 @@ const CustomerDashboard = () => {
   const userLoggedInData = useRecoilValue(userAtom);
   const navigate = useNavigate();
   const toast = useToaster();
+  const [isMobileOrTab] = useMediaQuery("(max-width: 900px)")
   
   useEffect(() => {
     // if logged out
@@ -35,11 +36,11 @@ const CustomerDashboard = () => {
   
   // once the userSelector is data is available the state changes...
   return (
-    <Flex flexDirection="column" mx={300} mt={90}>
+    <Flex flexDirection="column" mx={!isMobileOrTab && 300} mt={isMobileOrTab ? 65 : 90}>
       <Dashboardheader userLoggedInData={userLoggedInDataLoadable.contents}/>
       <Box w="full" h={0.1} bg="purple.shadowLight"></Box>
       <Flex flexDirection="column" mt={8} alignItems="center" gap={4}>
-        <Text className="sub-heading" fontSize="2xl" textAlign="center" w="full">Games Purchased</Text>
+        <Text className="sub-heading" fontSize="2xl" textAlign="center" w={!isMobileOrTab && "full"}>Games Purchased</Text>
         {!(userLoggedInDataLoadable.contents?.games?.length) && <Text>No games purchased yet 😔</Text>}
         <Link to="/shop-now"><LandingButton text="Shop now"/></Link>
         <Flex flexWrap="wrap" my={10} gap={10} justifyContent="center">

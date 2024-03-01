@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 
 const App = () => {
   return (
-    <Container maxW='8xl'>
+    <Container minW={{md:'8xl'}}>
       <Layout>
         <Outlet />
       </Layout>

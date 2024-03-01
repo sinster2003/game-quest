@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spinner, Text, Textarea, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spinner, Text, Textarea, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -30,6 +30,7 @@ const GameDetails = () => {
   const [value, setValue] = useState("");
   const [remaining, setRemaining] = useState(maxCharacters);
   const [loading, setLoading] = useState(false);
+  const [isMobileOrTab] = useMediaQuery("(max-width: 900px)");
   
   useEffect(() => {
     if(!userLoggedInData) { // not logged in
@@ -110,12 +111,12 @@ const GameDetails = () => {
   return (
     <Flex flexDirection="column" gap={10} position="relative">
       {loading && <Spinner size="lg" position="fixed" top={5} right={5}/>}
-      <Flex justifyContent="flex-start" my={20}>
-          <Flex w="50%" justifyContent="center">
-              <Image borderRadius={"full"} boxShadow="0px 0px 50px 0px #7a6ac3" src={game?.image} w={300} h={300} objectFit="cover" objectPosition="top"/>
+      <Flex flexDirection={isMobileOrTab && "column"} justifyContent="flex-start" my={isMobileOrTab ? 10 : 20}>
+          <Flex w={isMobileOrTab ? "100%" : "50%"} justifyContent="center">
+            <Image borderRadius={!isMobileOrTab && "full"} boxShadow="0px 0px 50px 0px #7a6ac3" src={game?.image} w={{base: 250, sm:300}} h={{base: 250, sm:300}} objectFit="cover" objectPosition="top"/>
           </Flex>
-          <Flex flexDirection="column" w="50%">
-              <Subheading size={60} text={game?.title} w="fit-content"/>
+          <Flex flexDirection="column" w={isMobileOrTab ? "100%" : "50%"} alignItems={isMobileOrTab && "center"} mt={isMobileOrTab && 10}>
+              <Subheading size={{base: "4xl", sm: 60}} text={game?.title} w="fit-content"/>
               <Flex gap={4} alignItems="center">
                 <Star gameId={game?._id}/>
                 <Text>({ratingCount} ratings)</Text>
@@ -133,7 +134,7 @@ const GameDetails = () => {
           </Flex>
       </Flex>
       <Flex flexDirection="column">
-        <Subheading text="Reviews" size="4xl" w="fit-content"/>
+        <Subheading text="Reviews" size="4xl" w={isMobileOrTab ? "full" : "fit-content"}/>
         {
           reviews?.length > 0 ?
           reviews?.map(review => {

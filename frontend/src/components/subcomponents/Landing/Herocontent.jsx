@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useMediaQuery } from "@chakra-ui/react";
 import Subheading from "../../utils/Subheading";
 import Subtext from "../../utils/Subtext";
 import LandingButton from "../../utils/LandingButton";
@@ -10,7 +10,9 @@ import { Link } from "react-router-dom";
 
 const Herocontent = () => {
   const [changingText, setChangingText] = useState("Delve into the gameplay");
-  
+  const [isMobile] = useMediaQuery('(max-width: 500px)');
+  const [isMobileOrTab] = useMediaQuery('(max-width: 900px)');
+
   return (
     <Flex flexDirection="column" mt={20}>
       {/* customer content */}
@@ -28,14 +30,15 @@ const Herocontent = () => {
         }}
       >
       <Flex
+        flexDirection={isMobileOrTab ? "column" : "row"}
         alignItems="center"
-        justifyContent="space-around"
+        justifyContent={isMobileOrTab ? "flex-start" : "space-around"}
         gap={20}
-        minH={600}
+        minH={isMobileOrTab ? "fit-content": 600}
         position="relative"
       >
-        <Shadow top={20} left={20} blur={500} spread={50} color={"#7a6ac3"} />
-        <Box
+        {!isMobileOrTab && <Shadow top={20} left={20} blur={500} spread={50} color={"#7a6ac3"} />}
+        {!isMobileOrTab && <Box
           position="relative"
           w={{ base: 300, md: 500 }}
           onMouseLeave={() => setChangingText("Delve into the gameplay")}
@@ -61,10 +64,10 @@ const Herocontent = () => {
             changeText={"WatchDogs2"}
             setChangingText={setChangingText}
           />
-        </Box>
+        </Box>}
 
-        <Flex flexDirection="column" w={{ base: 300, md: 600 }}>
-          <Subheading text={changingText} size="5xl" />
+        <Flex flexDirection="column" w={{ base: 300, md: 600 }} alignItems={isMobileOrTab && "center"}>
+          <Subheading text={changingText} size={isMobileOrTab ? "4xl" : "5xl"} />
           <Subtext text="Enjoy the look and feel of the games you buy. If you are a vendor sell some amazing games contributing to the gamer community" />
           <Link to="/login"><LandingButton text="Buy now" /></Link>
         </Flex>
@@ -86,21 +89,21 @@ const Herocontent = () => {
         }}
       >
       <Flex
+        flexDirection={isMobileOrTab ? "column" : "row"}
         alignItems="center"
-        justifyContent="space-around"
+        justifyContent={isMobileOrTab ? "flex-start" : "space-around"}
         gap={20}
-        minH={600}
+        minH={isMobileOrTab ? "fit-content": 600}
       >
-        <Flex flexDirection="column" w={{ base: 300, md: 600 }} mt={20}>
-          <Subheading text={"Sell awesome games"} size="5xl" />
+        <Flex flexDirection="column" w={{ base: 300, md: 600 }} mt={20} mb={isMobileOrTab && 20} alignItems={isMobileOrTab && "center"}>
+          <Subheading text={"Sell awesome games"} size={isMobileOrTab ? "4xl" : "5xl"} />
           <Subtext text="Contributing to the gamer community? Sell some good games and register your online gaming marketplace" />
           <Link to="/login?role=owner"><LandingButton text="Sell Now" /></Link>
         </Flex>
 
-        <Box
+        {!isMobileOrTab && <Box
           position="relative"
           w={{ base: 300, md: 500 }}
-          onMouseLeave={() => setChangingText("Delve into the gameplay")}
         >
           <Shadow top={0} left={0} blur={500} spread={60} color={"#7a6ac3"} />
           <HoverImage
@@ -124,7 +127,7 @@ const Herocontent = () => {
             changeText={"WatchDogs2"}
             setChangingText={setChangingText}
           />
-        </Box>
+        </Box>}
       </Flex>
       </motion.div>
     </Flex>
