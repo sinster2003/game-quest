@@ -8,6 +8,7 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import {v2 as cloudinary} from "cloudinary";
 import { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_NAME } from "./utils/config.js";
 import path from "path";
+import { fileURLToPath } from "url";
 
 connectDb(); // connecting database
 
@@ -18,6 +19,10 @@ cloudinary.config({
     api_key: CLOUDINARY_API_KEY,
     api_secret: CLOUDINARY_API_SECRET
 });
+
+// module type
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const corsOption = {
     origin: true,
