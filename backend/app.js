@@ -29,7 +29,7 @@ app.use(cors(corsOption)); // avoid cors errors
 app.use(express.json({limit: "50mb"})); // access req.body
 app.use(express.urlencoded({extended: true, limit: "50mb"})); // parses form data
 app.use(cookieParser());
-app.use(express.static()); // to handle static build files 
+app.use(express.static("dist")); // to handle static build files 
 
 // version router
 app.use("/api/v1", apiRouter);
