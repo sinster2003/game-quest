@@ -10,13 +10,6 @@ const gamesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    gameplay_images: [
-        {
-            image: {
-                type: String
-            }
-        }
-    ],
     description: {
         type: String,
         maxLength: 500,
