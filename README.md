@@ -5,6 +5,7 @@
 - Cart Feature making easier for a customer to checkout.
 - Dedicated customer and owner dashboard to buy or sell games.
 - Profile Updation feature enabling to maintain an unique presence in the gaming community.
+- Fully Mobile responsive and authenticated.
 
 ## Technologies
 - React - Frontend
@@ -14,6 +15,7 @@
 - Styling - ChakraUI
 - Cloud Storage - Cloudinary
 - Authentication - JWT
+- Payment - Stripe
 
 ## Few Screenshots of GameQuest
 
@@ -30,3 +32,9 @@
 ![screencapture-game-quest-onrender-game-details-65e61003a0515843347c9254-2024-03-05-00_06_43](https://github.com/sinster2003/game-quest/assets/98259926/e923e364-e094-4f24-bf60-e82edafe2979)
 
 ![screencapture-game-quest-onrender-owner-dashboard-2024-03-05-00_07_17](https://github.com/sinster2003/game-quest/assets/98259926/a0855f23-5f6e-4d8c-806c-3bb7ddfe9a1b)
+
+![Screenshot 2024-03-05 001352](https://github.com/sinster2003/game-quest/assets/98259926/716b4814-2bdf-422b-94da-320cae31e5c3)
+
+![screencapture-game-quest-onrender-shop-now-2024-03-05-00_10_32](https://github.com/sinster2003/game-quest/assets/98259926/e4040da0-64dc-41d0-8fe0-642f7b0c324a)
+
+![screencapture-checkout-stripe-c-pay-cs-test-a1jIC8s76RbnxApqFjJ920N1dStyT1iDnv2XWydlA2J0vdR3iGPlbr60Uh-2024-03-05-00_11_28](https://github.com/sinster2003/game-quest/assets/98259926/b4a419e0-0fda-4bcb-b413-929c4a116786)
