@@ -30,11 +30,14 @@ const buyGame = async (req, res) => {
         return res.status(400).json({message: "Shop Not Found"});
     }
 
+    const customerEmail = await Customer.findById(customerId).select("email");
+
     // add purchases to purchase collect
     const purchase = new Purchase({
         customer_id: customerId,
         shop_id: isShop._id,
         game_id: isGame._id,
+        email: customerEmail,
         amount: isGame.price,
         date_of_purchase: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
     });

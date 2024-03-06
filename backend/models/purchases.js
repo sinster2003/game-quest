@@ -16,6 +16,11 @@ const purchasesSchema = new mongoose.Schema({
         ref: "Game",
         required: true
     },
+    // for trigger
+    email: {
+        type: String,
+        required: true
+    },
     amount: {
         type: Number,
         required: true
